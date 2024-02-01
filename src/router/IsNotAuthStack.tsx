@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/authentication/LoginScreen";
 import SplashScreen from "../screens/authentication/SplashScreen";
+import RegisterScreen from "../screens/authentication/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,13 +16,16 @@ const IsNotAuthStack = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          animation: "fade",
+        }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ headerShown: false }}
-      /> */}
+        options={{ headerShown: false, animation: "slide_from_right" }}
+      />
     </Stack.Navigator>
   );
 };

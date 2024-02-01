@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../screens/HomeScreen";
+import ChatRoomScreen from "../screens/ChatRoomScreen";
 import SplashScreen from "../screens/authentication/SplashScreen";
 const Stack = createNativeStackNavigator();
 
@@ -8,15 +8,18 @@ const IsAuthStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="SplashScreen"
-      screenOptions={{ headerShown: true }}
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
 
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ChatRoom"
+        component={ChatRoomScreen}
         options={{
+          // headerShown: true,
           headerTitle: "All Chats is displayed here",
+          animation: "fade",
+          animationDuration: 300,
         }}
       />
     </Stack.Navigator>

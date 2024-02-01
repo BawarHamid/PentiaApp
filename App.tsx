@@ -1,17 +1,17 @@
-import { SafeAreaView, StatusBar } from "react-native";
+import { SafeAreaView, StatusBar, View } from "react-native";
 import React from "react";
 import AppNavigator from "./src/router/AppNavigator";
 import { UserContextProvider } from "./src/context/UserContext";
 import Colors from "./src/constants/Colors";
+import { defaultStyles } from "./src/constants/Styles";
 
 const App: React.FC = () => {
   return (
     <UserContextProvider>
-      <SafeAreaView className="bg-primary-bgcolor flex-1">
-        <StatusBar backgroundColor={Colors["primary-medium-black"]} />
-
+      <StatusBar backgroundColor={Colors["primary-medium-black"]} />
+      <View style={defaultStyles.container}>
         <AppNavigator />
-      </SafeAreaView>
+      </View>
     </UserContextProvider>
   );
 };

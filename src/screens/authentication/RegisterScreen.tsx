@@ -16,17 +16,17 @@ import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../constants/Styles";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/FirebaseConfig";
-import Spinner from "react-native-loading-spinner-overlay";
 
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
 const { width, height } = Dimensions.get("window");
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
   const navigtion = useNavigation();
 
@@ -34,16 +34,16 @@ const LoginScreen = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      if (email !== "" && password !== "") {
-        console.log("Login success");
+      if (email !== "" && password !== "" && username !== "") {
         // navigtion.navigate("ChatRoom" as never);
+        console.log("Register success");
       } else {
-        Alert.alert("Login error", "Please provide both email and password.");
+        Alert.alert("Register error", "Please provide all the data needed!");
       }
     } catch (error: any) {
-      Alert.alert("Login error", error);
+      Alert.alert("Register error", error);
     }
   };
 
@@ -56,18 +56,27 @@ const LoginScreen = () => {
         style={{
           alignItems: "center",
           justifyContent: "center",
-          gap: 16,
+          gap: 10,
           marginTop: height * 0.15,
         }}
       >
         <Text
           style={{
             fontFamily: "Montserrat-Bold",
-            fontSize: 24,
+            fontSize: 18,
             color: Colors["primary-black"],
           }}
         >
-          Welcome back
+          Welcome to Chat Chat
+        </Text>
+        <Text
+          style={{
+            fontFamily: "Montserrat-Medium",
+            fontSize: 14,
+            color: Colors["primary-medium-black"],
+          }}
+        >
+          Let's create an account together!
         </Text>
         <Animated.Image
           source={PentiaLogo}
@@ -79,8 +88,25 @@ const LoginScreen = () => {
       </View>
 
       {/* form-view start */}
-      <View style={{ marginTop: height * 0.018 }}>
+      <View style={{ marginTop: height * 0.01 }}>
         <View style={{ alignItems: "center" }}>
+          {/* input for username */}
+          <View style={{ marginTop: height * 0.015 }}>
+            <TextInput
+              autoCapitalize="none"
+              placeholder="Username"
+              placeholderTextColor={Colors["primary-grey"]}
+              style={[
+                defaultStyles.inputField,
+                { borderColor: Colors["primary-cyan"] },
+              ]}
+              className="focus:border-2"
+              value={username}
+              keyboardType="email-address"
+              onChangeText={setUsername}
+            />
+          </View>
+
           {/* input for email */}
           <View style={{ marginTop: height * 0.015 }}>
             <TextInput
@@ -122,23 +148,6 @@ const LoginScreen = () => {
             />
           </View>
         </View>
-        {/* forgot pass  */}
-        <View style={{ marginTop: width * 0.05, paddingRight: width * 0.1 }}>
-          <TouchableOpacity
-          // onPress={() => navigtion.navigate("Forgot-Password" as never)}
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat-SemiBold",
-                fontSize: 14,
-                color: Colors["primary-cyan"],
-                alignSelf: "flex-end",
-              }}
-            >
-              Forgot your password?
-            </Text>
-          </TouchableOpacity>
-        </View>
         {/* submit btn */}
         <View style={{ marginTop: height * 0.032, alignItems: "center" }}>
           {loading ? (
@@ -148,7 +157,7 @@ const LoginScreen = () => {
               // disabled={!email || !password || (!email && !password)}
               style={defaultStyles.authBtn}
               className="active:bg-primary-cyan active:opacity-50"
-              onPress={handleLogin}
+              onPress={handleRegister}
             >
               <Text
                 style={{
@@ -157,7 +166,7 @@ const LoginScreen = () => {
                   fontFamily: "Montserrat-SemiBold",
                 }}
               >
-                Login
+                Register
               </Text>
             </TouchableOpacity>
           )}
@@ -166,7 +175,7 @@ const LoginScreen = () => {
         {/* route to register */}
         <View style={{ marginTop: width * 0.08 }}>
           <TouchableOpacity
-            onPress={() => navigtion.navigate("Register" as never)}
+            onPress={() => navigtion.navigate("Login" as never)}
           >
             <View
               style={{
@@ -182,7 +191,7 @@ const LoginScreen = () => {
                   color: Colors["primary-black"],
                 }}
               >
-                Don't have an account yet? {""}
+                Already have an account? {""}
               </Text>
               <Text
                 style={{
@@ -191,13 +200,13 @@ const LoginScreen = () => {
                   color: Colors["primary-cyan"],
                 }}
               >
-                Sign up here!
+                Sign in here!
               </Text>
             </View>
           </TouchableOpacity>
         </View>
-        {/* View view separator and social login */}
-        <View style={[stylesLogin.viewSeparator, { marginTop: height * 0.05 }]}>
+        {/* View separator */}
+        <View style={[stylesLogin.viewSeparator, { marginTop: height * 0.03 }]}>
           <View
             style={{
               flex: 1,
@@ -214,12 +223,13 @@ const LoginScreen = () => {
             }}
           />
         </View>
+        {/* social btns */}
         <View
           style={{
             gap: 12,
             alignItems: "center",
             justifyContent: "center",
-            marginVertical: height * 0.04,
+            marginVertical: height * 0.035,
             flexDirection: "row",
           }}
         >
@@ -255,7 +265,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   eyeIcon: {

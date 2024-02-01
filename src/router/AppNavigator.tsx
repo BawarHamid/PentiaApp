@@ -1,43 +1,44 @@
-import { View, Text, StatusBar, ActivityIndicator } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import Colors from "../constants/Colors";
-import SplashScreen from "../screens/authentication/SplashScreen";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../FirebaseConfig";
+import { auth } from "../firebase/FirebaseConfig";
 import IsAuthStack from "./IsAuthStack";
 import IsNotAuthStack from "./IsNotAuthStack";
 import { useAuth } from "../context/UserContext";
+import Spinner from "react-native-loading-spinner-overlay";
+import Colors from "../constants/Colors";
 
 const AppNavigator = () => {
-  const { user, setUser } = useAuth();
+  const { setUser, isAuthenticated, setIsAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // onAuthStateChanged returns an unsubscriber
-    const unsubscribeAuth = onAuthStateChanged(
-      auth,
-      async (authenticatedUser) => {
-        authenticatedUser ? setUser(authenticatedUser) : setUser(null);
-        setIsLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in and authenticated
+        setUser(user);
+        setIsAuthenticated(true);
+      } else {
+        // User is signed out and not authenticated
+        setUser(null);
+        setIsAuthenticated(false);
       }
-    );
-    // unsubscribe auth listener on unmount
-    return unsubscribeAuth;
-  }, [user]);
+      setIsLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
   if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color={Colors["primary-grey"]} />
-      </View>
-    );
+    // This will render a loading indicator while waiting for auth state
+    return <Spinner size="large" color={Colors["primary-cyan"]} />;
   }
 
   return (
     <NavigationContainer>
-      {user ? <IsAuthStack /> : <IsNotAuthStack />}
-      {/* {user ? <IsNotAuthStack /> : <IsAuthStack />} */}
+      {isAuthenticated ? <IsAuthStack /> : <IsNotAuthStack />}
+      {/* {isAuthenticated ? <IsNotAuthStack /> : <IsAuthStack />} */}
     </NavigationContainer>
   );
 };

@@ -1,13 +1,15 @@
 import { Platform, KeyboardAvoidingView, ScrollView } from "react-native";
-import React from "react";
+import React, { ReactNode } from "react";
+import Colors from "../../constants/Colors";
+import { defaultStyles } from "../../constants/Styles";
 
 const ios = Platform.OS == "ios";
 
-const CustomKeyBoardView = ({ children }) => {
+const CustomKeyBoardView = ({ children }: { children: ReactNode }) => {
   return (
     <KeyboardAvoidingView
       behavior={ios ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={defaultStyles.container}
     >
       <ScrollView
         style={{ flex: 1 }}

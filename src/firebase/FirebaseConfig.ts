@@ -10,7 +10,7 @@ import {
   getAuth,
   getReactNativePersistence,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection } from "firebase/firestore";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 // Firebase config
@@ -35,13 +35,12 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 // Initialize Firebase auth with persistence using React Native AsyncStorage
-const auth = initializeAuth(firebaseApp, {
+export const auth = initializeAuth(firebaseApp, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 
-// export const auth = getAuth();
-
 // Initialize Firestore
-const database = getFirestore(firebaseApp);
+export const database = getFirestore(firebaseApp);
 
-export { auth, database };
+export const usersRef = collection(database, "users");
+export const chatroomRef = collection(database, "chatroom");

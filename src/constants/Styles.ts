@@ -7,23 +7,23 @@ const { width, height } = Dimensions.get("window");
 export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FDFFFF",
+    backgroundColor: Colors["primary-bgcolor"],
   },
   inputField: {
     height: 50,
-    width: width * 0.95,
-    color: Colors["primary-black"],
+    width: width * 0.85,
+    color: Colors["primary-medium-black"],
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
     paddingLeft: 30,
-    fontFamily: "Montserrat-SemiBold",
+    fontFamily: "Montserrat-Medium",
     backgroundColor: "#ffffff",
   },
   authBtn: {
     backgroundColor: Colors["primary-cyan"],
     height: 55,
-    width: width * 0.95,
+    width: width * 0.85,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -41,6 +41,17 @@ export const defaultStyles = StyleSheet.create({
     flexDirection: "row",
     fontFamily: "Montserrat-SemiBold",
   },
+  socialsBtnSmall: {
+    backgroundColor: "#FFFFFF",
+    borderColor: Colors["primary-medium-black"],
+    height: height * 0.05,
+    width: width * 0.15,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    fontFamily: "Montserrat-SemiBold",
+  },
   socialsBtnText: {
     color: "#000000",
     fontSize: 16,
@@ -50,6 +61,10 @@ export const defaultStyles = StyleSheet.create({
   socialBtnIcon: {
     position: "absolute",
     left: 16,
+  },
+  socialBtnSmallIcon: {
+    position: "absolute",
+    alignItems: "center",
   },
 
   btn: {
@@ -91,10 +106,11 @@ export const stylesLogin = StyleSheet.create({
   viewSeparator: {
     flexDirection: "row",
     gap: 10,
+    paddingHorizontal: width * 0.085,
     alignItems: "center",
   },
   textSeparator: {
-    fontFamily: "mon-semi-bold",
-    color: Colors["primary-medium-black"],
+    fontFamily: "Montserrat-SemiBold",
+    color: Colors["primary-cyan"],
   },
 });
