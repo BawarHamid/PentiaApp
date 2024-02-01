@@ -14,9 +14,6 @@ import Colors from "../../constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../constants/Styles";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/FirebaseConfig";
-
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
@@ -37,6 +34,7 @@ const RegisterScreen = () => {
   const handleRegister = async () => {
     try {
       if (email !== "" && password !== "" && username !== "") {
+        setLoading(true);
         // navigtion.navigate("ChatRoom" as never);
         console.log("Register success");
       } else {

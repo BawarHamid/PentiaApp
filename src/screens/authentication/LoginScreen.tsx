@@ -14,10 +14,6 @@ import Colors from "../../constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../constants/Styles";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/FirebaseConfig";
-import Spinner from "react-native-loading-spinner-overlay";
-
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
@@ -196,7 +192,7 @@ const LoginScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        {/* View view separator and social login */}
+        {/* View separator */}
         <View style={[stylesLogin.viewSeparator, { marginTop: height * 0.05 }]}>
           <View
             style={{
@@ -214,6 +210,7 @@ const LoginScreen = () => {
             }}
           />
         </View>
+        {/* social login */}
         <View
           style={{
             gap: 12,
