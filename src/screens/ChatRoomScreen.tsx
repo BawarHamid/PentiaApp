@@ -8,9 +8,12 @@ import Animated, {
   PinwheelIn,
   PinwheelOut,
 } from "react-native-reanimated";
+import { useAuth } from "../context/UserContext";
 const { width, height } = Dimensions.get("window");
 
 const ChatRoomScreen = () => {
+  const { logout } = useAuth();
+
   return (
     <View
       className="mt-2"
@@ -28,7 +31,7 @@ const ChatRoomScreen = () => {
       </View>
 
       <View className="items-end">
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => logout()}>
           {/* <VectorIcon
             type="Entypo"
             name="chevron-left"

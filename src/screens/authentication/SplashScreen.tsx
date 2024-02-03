@@ -4,7 +4,7 @@ import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/UserContext";
 import { Dimensions } from "react-native";
-import { defaultStyles } from "../../constants/Styles";
+import { defaultStyles } from "../../utils/constants/Styles";
 const { width, height } = Dimensions.get("window");
 
 const SplashScreen = () => {

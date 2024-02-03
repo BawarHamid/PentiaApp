@@ -2,8 +2,8 @@ import { SafeAreaView, StatusBar, View } from "react-native";
 import React from "react";
 import AppNavigator from "./src/router/AppNavigator";
 import { UserContextProvider } from "./src/context/UserContext";
-import Colors from "./src/constants/Colors";
-import { defaultStyles } from "./src/constants/Styles";
+import Colors from "./src/utils/constants/Colors";
+import { defaultStyles } from "./src/utils/constants/Styles";
 
 const App: React.FC = () => {
   return (

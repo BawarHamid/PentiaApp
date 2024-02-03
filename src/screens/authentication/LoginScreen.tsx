@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Alert,
   TouchableOpacity,
   ActivityIndicator,
@@ -10,13 +9,17 @@ import {
 import React, { useState } from "react";
 import CornerImg from "../../assets/images/CornerShape.png";
 import PentiaLogo from "../../assets/images/LogoImgs/PentiaLogo.png";
-import Colors from "../../constants/Colors";
+import Colors from "../../utils/constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
-import { defaultStyles, stylesLogin } from "../../constants/Styles";
+import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/FirebaseConfig";
+import AuthInput from "../../components/authentication/auth-input/AuthInput";
+import SocialLoginButton from "../../components/authentication/social-login-buttons/SocialLoginButton";
 const { width, height } = Dimensions.get("window");
 
 const LoginScreen = () => {
@@ -31,16 +34,45 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    try {
-      if (email !== "" && password !== "") {
-        console.log("Login success");
-        // navigtion.navigate("ChatRoom" as never);
-      } else {
-        Alert.alert("Login error", "Please provide both email and password.");
-      }
-    } catch (error: any) {
-      Alert.alert("Login error", error);
+    // No empty fields
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Login Error", "Please fill in all fields.");
+      return;
     }
+
+    // email-format is getting checked
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      Alert.alert("Registration Error", "Please enter a valid email address");
+      return;
+    }
+
+    // Loading triggered
+    setLoading(true);
+
+    // Attempt to create user
+    signInWithEmailAndPassword(auth, email.trim(), password)
+      .then(() => {
+        setLoading(false);
+        // Navigate to next screen and show success message
+        Alert.alert("Success", "Login successful!");
+      })
+      .catch((error) => {
+        setLoading(false);
+        // Error codes er fundet på nedestående sider
+        //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
+        //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
+        let errorMessage = "Login failed. Please try again";
+        if (error.code === "auth/invalid-credential") {
+          errorMessage =
+            "Your password is incorrect or this account doesn't exist";
+        } else if (error.code === "auth/wrong-password") {
+          errorMessage = "Incorrect password";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Incorrect email";
+        }
+        Alert.alert("Registration Error", errorMessage);
+      });
   };
 
   return (
@@ -79,42 +111,42 @@ const LoginScreen = () => {
         <View style={{ alignItems: "center" }}>
           {/* input for email */}
           <View style={{ marginTop: height * 0.015 }}>
-            <TextInput
+            <AuthInput
+              changeCallback={setEmail}
+              value={email}
               autoCapitalize="none"
+              keyboardType="email-address"
               placeholder="Email address"
               placeholderTextColor={Colors["primary-grey"]}
               style={[
                 defaultStyles.inputField,
                 { borderColor: Colors["primary-cyan"] },
               ]}
-              className="focus:border-2"
-              value={email}
-              keyboardType="email-address"
-              onChangeText={setEmail}
             />
           </View>
           {/* input for password with on/off-hide */}
           <View className="mt-4">
-            <TextInput
-              autoCapitalize="none"
-              secureTextEntry={!showPassword}
+            <AuthInput
+              changeCallback={setPassword}
               value={password}
-              onChangeText={setPassword}
+              autoCapitalize="none"
+              placeholder="Password"
+              placeholderTextColor={Colors["primary-grey"]}
               style={[
                 defaultStyles.inputField,
                 { borderColor: Colors["primary-cyan"] },
               ]}
-              className="focus:border-2"
-              placeholder="Password"
-              placeholderTextColor={Colors["primary-grey"]}
-            />
-            <VectorIcon
-              type="Ionicons"
-              name={showPassword ? "eye" : "eye-off"}
-              size={24}
-              color={Colors["primary-cyan"]}
-              onPress={toggleShowPassword}
-              style={styles.eyeIcon}
+              secureTextEntry={!showPassword}
+              icon={
+                <VectorIcon
+                  type="Ionicons"
+                  name={showPassword ? "eye" : "eye-off"}
+                  size={24}
+                  color={Colors["primary-cyan"]}
+                  onPress={toggleShowPassword}
+                  style={styles.eyeIcon}
+                />
+              }
             />
           </View>
         </View>
@@ -221,31 +253,34 @@ const LoginScreen = () => {
           }}
         >
           {/* btn for login with Google-account */}
-          <TouchableOpacity
-            style={defaultStyles.socialsBtnSmall}
+          <SocialLoginButton
             // onPress={() => onSelectSocialAuth(Strategy.Facebook)}
-          >
-            <VectorIcon
-              type="Ionicons"
-              name="logo-google"
-              size={24}
-              style={defaultStyles.socialBtnSmallIcon}
-              color="#4285F4"
-            />
-          </TouchableOpacity>
+            style={defaultStyles.socialsBtnSmall}
+            icon={
+              <VectorIcon
+                type="Ionicons"
+                name="logo-google"
+                size={24}
+                style={defaultStyles.socialBtnSmallIcon}
+                color="#4285F4"
+              />
+            }
+          />
+
           {/* btn for login with Facebook-account */}
-          <TouchableOpacity
-            style={defaultStyles.socialsBtnSmall}
+          <SocialLoginButton
             // onPress={() => onSelectSocialAuth(Strategy.Facebook)}
-          >
-            <VectorIcon
-              type="Ionicons"
-              name="logo-facebook"
-              size={24}
-              style={defaultStyles.socialBtnSmallIcon}
-              color="#0866FF"
-            />
-          </TouchableOpacity>
+            style={defaultStyles.socialsBtnSmall}
+            icon={
+              <VectorIcon
+                type="Ionicons"
+                name="logo-facebook"
+                size={24}
+                style={defaultStyles.socialBtnSmallIcon}
+                color="#0866FF"
+              />
+            }
+          />
         </View>
       </View>
     </CustomKeyBoardView>
