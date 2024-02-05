@@ -5,16 +5,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  User,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { User, onAuthStateChanged } from "firebase/auth";
 import { ActivityIndicator } from "react-native";
 import Colors from "../utils/constants/Colors";
 import { auth, database } from "../firebase/FirebaseConfig";
+import { defaultStyles } from "../utils/constants/Styles";
+import { doc, getDoc } from "firebase/firestore";
 
 const UserContext = createContext({});
 
@@ -25,12 +21,24 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   );
   const [isLoading, setIsLoading] = useState(true);
 
+  const updateUserData = async (user: User) => {
+    if (user?.uid) {
+      const docSnap = await getDoc(doc(database, "users", user.uid));
+      if (docSnap.exists()) {
+        // console.log("contextData2", docSnap.data());
+        setUser({ ...user, ...docSnap.data() });
+      }
+    }
+  };
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log("userContextData:", user);
+
       if (user) {
         // User is signed in and authenticated
-        setUser(user);
         setIsAuthenticated(true);
+        await updateUserData(user); // Ensure updateUserData is defined before calling it
       } else {
         // User is signed out and not authenticated
         setUser(null);
@@ -44,65 +52,25 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   if (isLoading) {
-    // This will render a loading indicator while waiting for auth state
-    return <ActivityIndicator size="large" color={Colors["primary-cyan"]} />;
+    // A loading indicator is triggered, while waiting for auth state
+    return (
+      <ActivityIndicator
+        style={[
+          defaultStyles.container,
+          { alignItems: "center", justifyContent: "center" },
+        ]}
+        size="large"
+        color={Colors["primary-cyan"]}
+      />
+    );
   }
-
-  // const login = async (email, password) => {
-  //   try {
-  //   } catch (error) {}
-  // };
-
-  // begge virker ikke
-  // const register = async (
-  //   email: string,
-  //   password: string,
-  //   username: string
-  // ) => {
-  //   try {
-  //     await createUserWithEmailAndPassword(auth, email, password).then(
-  //       (userCred) => {
-  //         const data = {
-  //           username: username,
-  //           userId: userCred.user.uid,
-  //         };
-
-  //         setDoc(doc(database, "users", userCred.user.uid), data)
-  //           .then(() => ({ success: true, data: userCred.user }))
-  //           .catch((error) => ({ success: false, errMsg: error.message }));
-  //       }
-  //     );
-  //   } catch (error: any) {
-  //     console.error("Firebase Auth Error:", error.message);
-  //     return { success: false, errMsg: error.message };
-  //   }
-  // };
-
-  // const register = async (
-  //   email: string,
-  //   password: string,
-  //   username: string
-  // ) => {
-  //   try {
-  //     const res = await createUserWithEmailAndPassword(auth, email, password);
-
-  //     await setDoc(doc(database, "users", res.user.uid), {
-  //       username,
-  //       userId: res.user.uid,
-  //     });
-
-  //     return { success: true, data: res.user };
-  //   } catch (error: any) {
-  //     console.error("Firebase Auth Error:", error.message);
-  //     return { success: false, errMsg: error.message };
-  //   }
-  // };
 
   const logout = async () => {
     try {
       await auth.signOut();
     } catch (error) {
-      return console.log(error);
+      console.log(error);
+      return error;
     }
   };
 
@@ -113,9 +81,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         setUser,
         isAuthenticated,
         setIsAuthenticated,
-        // login,
         logout,
-        // register,
       }}
     >
       {children}
@@ -126,6 +92,3 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => useContext(UserContext);
 
 export default UserContext;
-function setIsLoading(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

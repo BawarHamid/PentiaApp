@@ -1,7 +1,7 @@
 import { Platform, KeyboardAvoidingView, ScrollView } from "react-native";
 import React, { ReactNode } from "react";
-import Colors from "../../utils/constants/Colors";
-import { defaultStyles } from "../../utils/constants/Styles";
+import Colors from "../../../../utils/constants/Colors";
+import { defaultStyles } from "../../../../utils/constants/Styles";
 
 const ios = Platform.OS == "ios";
 

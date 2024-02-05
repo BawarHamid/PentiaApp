@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ChatRoomScreen from "../screens/ChatRoomScreen";
+import ChatRoomScreen from "../screens/chat/ChatRoomScreen";
 import SplashScreen from "../screens/authentication/SplashScreen";
 const Stack = createNativeStackNavigator();
 

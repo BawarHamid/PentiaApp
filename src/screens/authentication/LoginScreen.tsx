@@ -15,11 +15,13 @@ import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
+import CustomKeyBoardView from "../../components/generic/scrollviews/keyboard-view/CustomKeyBoardView";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/FirebaseConfig";
+import { auth, database } from "../../firebase/FirebaseConfig";
 import AuthInput from "../../components/authentication/auth-input/AuthInput";
 import SocialLoginButton from "../../components/authentication/social-login-buttons/SocialLoginButton";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../../context/UserContext";
 const { width, height } = Dimensions.get("window");
 
 const LoginScreen = () => {
@@ -27,7 +29,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const navigtion = useNavigation();
+  const navigation = useNavigation();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,7 +45,7 @@ const LoginScreen = () => {
     // email-format is getting checked
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      Alert.alert("Registration Error", "Please enter a valid email address");
+      Alert.alert("Login Error", "Please enter a valid email address");
       return;
     }
 
@@ -55,8 +57,21 @@ const LoginScreen = () => {
       .then(() => {
         setLoading(false);
         // Navigate to next screen and show success message
-        Alert.alert("Success", "Login successful!");
+        // Alert.alert("Success", "Login successful!");
       })
+      // .then((userCred) => {
+      //   if (userCred) {
+      //     getDoc(doc(database, "users", userCred.user.uid)).then((docSnap) => {
+      //       if (docSnap.exists()) {
+      //         console.log("userLoginData", docSnap.data());
+      //         setUser(docSnap.data());
+      //       }
+      //     });
+      //   }
+      //   setLoading(false);
+      //   // Navigate to next screen and show success message
+      //   Alert.alert("Success", "Login successful!");
+      // })
       .catch((error) => {
         setLoading(false);
         // Error codes er fundet på nedestående sider
@@ -194,7 +209,7 @@ const LoginScreen = () => {
         {/* route to register */}
         <View style={{ marginTop: width * 0.08 }}>
           <TouchableOpacity
-            onPress={() => navigtion.navigate("Register" as never)}
+            onPress={() => navigation.navigate("Register" as never)}
           >
             <View
               style={{

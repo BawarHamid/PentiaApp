@@ -15,7 +15,7 @@ import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
+import CustomKeyBoardView from "../../components/generic/scrollviews/keyboard-view/CustomKeyBoardView";
 import { useAuth } from "../../context/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
@@ -65,7 +65,7 @@ const RegisterScreen = () => {
       .then(() => {
         setLoading(false);
         // Navigate to next screen or show success message
-        Alert.alert("Success", "Registration successful!");
+        // Alert.alert("Success", "Registration successful!");
       })
       .catch((error) => {
         setLoading(false);

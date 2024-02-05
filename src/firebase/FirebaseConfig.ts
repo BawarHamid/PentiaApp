@@ -42,5 +42,5 @@ export const auth = initializeAuth(firebaseApp, {
 // Initialize Firestore
 export const database = getFirestore(firebaseApp);
 
-export const usersRef = collection(database, "users");
+export const userProfileRef = collection(database, "userprofile");
 export const chatroomRef = collection(database, "chatroom");

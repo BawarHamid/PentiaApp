@@ -1,25 +1,26 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/UserContext";
 import { Dimensions } from "react-native";
 import { defaultStyles } from "../../utils/constants/Styles";
+
 const { width, height } = Dimensions.get("window");
 
 const SplashScreen = () => {
   const { user } = useAuth();
-  // const { navigate } = useNavigation();
-  const navigtion = useNavigation();
+  const navigation = useNavigation();
 
-  setTimeout(() => {
-    {
-      // user ? navigate("Home" as never) : navigate("Login" as never);
+  useEffect(() => {
+    const timer = setTimeout(() => {
       user
-        ? navigtion.navigate("ChatRoom" as never)
-        : navigtion.navigate("Login" as never);
-    }
-  }, 2700);
+        ? navigation.navigate("ChatRoom" as never)
+        : navigation.navigate("Login" as never);
+    }, 2600);
+
+    return () => clearTimeout(timer);
+  }, [user, navigation]);
 
   return (
     <View
