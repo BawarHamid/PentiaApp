@@ -7,7 +7,7 @@ type RecentViewAvatarProps = {
 
 const RecentViewAvatar: React.FC<RecentViewAvatarProps> = ({ imgUrl }) => {
   return (
-    <View style={{ alignContent: "center" }}>
+    <View>
       <Image
         source={imgUrl}
         style={{ width: 65, height: 65, borderRadius: 100 }}

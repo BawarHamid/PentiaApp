@@ -1,13 +1,14 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
+import CustomPopUpMenu from "../../overlay/menu/CustomPopUpMenu";
 
-type HeaderProps = {
+type ChatListHeaderProps = {
   title: string;
   icon: ReactElement;
 };
 
-const Header: React.FC<HeaderProps> = ({ title, icon }) => {
+const ChatListHeader: React.FC<ChatListHeaderProps> = ({ title, icon }) => {
   return (
     <View
       style={{
@@ -19,16 +20,16 @@ const Header: React.FC<HeaderProps> = ({ title, icon }) => {
     >
       <Text
         style={{
-          fontFamily: "Montserrat-SemiBold",
-          fontSize: 20,
-          color: Colors["primary-blue"],
+          fontFamily: "Montserrat-Bold",
+          fontSize: 28,
+          color: Colors["primary-white"],
         }}
       >
         {title}
       </Text>
-      <TouchableOpacity>{icon}</TouchableOpacity>
+      <CustomPopUpMenu icon={icon} />
     </View>
   );
 };
 
-export default Header;
+export default ChatListHeader;

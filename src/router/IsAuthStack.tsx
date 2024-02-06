@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ChatRoomScreen from "../screens/chat/ChatRoomScreen";
 import SplashScreen from "../screens/authentication/SplashScreen";
+import ChatScreen from "../screens/chat/ChatScreen";
 const Stack = createNativeStackNavigator();
 
 const IsAuthStack = () => {
@@ -17,7 +18,17 @@ const IsAuthStack = () => {
         component={ChatRoomScreen}
         options={{
           // headerShown: true,
-          headerTitle: "All Chats is displayed here",
+          // headerTitle: "All Chats is displayed here",
+          animation: "fade",
+          animationDuration: 300,
+        }}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{
+          // headerShown: true,
+          // headerTitle: "A selected chat is displayed here",
           animation: "fade",
           animationDuration: 300,
         }}

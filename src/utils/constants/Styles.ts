@@ -18,7 +18,7 @@ export const defaultStyles = StyleSheet.create({
     borderRadius: 100,
     paddingLeft: 30,
     fontFamily: "Montserrat-Medium",
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors["primary-white"],
   },
   authBtn: {
     backgroundColor: Colors["primary-cyan"],
@@ -30,7 +30,7 @@ export const defaultStyles = StyleSheet.create({
     fontFamily: "Montserrat-SemiBold",
   },
   socialsBtn: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors["primary-white"],
     borderWidth: 1,
     borderColor: Colors["primary-medium-black"],
     height: 50,
@@ -42,7 +42,7 @@ export const defaultStyles = StyleSheet.create({
     fontFamily: "Montserrat-SemiBold",
   },
   socialsBtnSmall: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors["primary-white"],
     borderColor: Colors["primary-medium-black"],
     height: height * 0.05,
     width: width * 0.15,
@@ -75,7 +75,7 @@ export const defaultStyles = StyleSheet.create({
     alignItems: "center",
   },
   btnText: {
-    color: "#FFFFFF",
+    color: Colors["primary-white"],
     fontSize: 16,
     fontFamily: "mon-bold",
   },
@@ -89,7 +89,7 @@ export const defaultStyles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors["primary-white"],
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderTopColor: Colors["primary-grey"],
@@ -100,7 +100,7 @@ export const defaultStyles = StyleSheet.create({
 export const stylesLogin = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fffff",
+    backgroundColor: Colors["primary-white"],
     padding: 26,
   },
   viewSeparator: {

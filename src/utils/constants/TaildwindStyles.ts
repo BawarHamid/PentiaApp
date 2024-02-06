@@ -9,7 +9,7 @@ export const btn = `
 `;
 
 export const authTextInput = `
-@apply h-[50px] text-black justify-center items-center rounded-full bg-[#ffffff] w-[340px] sm:w-80 md:w-70 lg:w-60 xl:w-50
+@apply h-[50px] text-black justify-center items-center rounded-full bg-[primary-white] w-[340px] sm:w-80 md:w-70 lg:w-60 xl:w-50
 `;
 
 export const btnAuth = `

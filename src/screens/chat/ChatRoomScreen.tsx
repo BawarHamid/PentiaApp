@@ -4,91 +4,53 @@ import PentiaLogo from "../../assets/images/LogoImgs/PentiaLogo.png";
 import { Dimensions } from "react-native";
 import Animated, { FlipInYLeft, FlipOutYRight } from "react-native-reanimated";
 import { useAuth } from "../../context/UserContext";
-import { defaultStyles } from "../../utils/constants/Styles";
-import Header from "../../components/generic/headers/Header";
+import ChatListHeader from "../../components/generic/headers/ChatListHeader";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Colors from "../../utils/constants/Colors";
-import RecentScrollView from "../../components/generic/scrollviews/RecentScrollView";
+import RecentScrollView from "../../components/chat/scrolls/RecentScrollView";
+import ChatRoomScrollList from "../../components/chat/scroll-list/ChatRoomScrollList";
 const { width, height } = Dimensions.get("window");
 
-const RecentChatList = [
-  {
-    img: { PentiaLogo },
-    username: "Larry",
-  },
-  {
-    img: { PentiaLogo },
-    username: "Larry",
-  },
-  {
-    img: { PentiaLogo },
-    username: "Larry",
-  },
-];
-
 const ChatRoomScreen = () => {
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
   console.log("userdata ChatRoom", user);
 
   return (
-    <View style={defaultStyles.container}>
-      <View style={{ marginTop: height * 0.05 }}>
-        <Header
+    <View style={{ flex: 1, backgroundColor: Colors["primary-darkbg"] }}>
+      {/* Header - view */}
+      <View style={{ marginTop: height * 0.035 }}>
+        <ChatListHeader
           title="Messages"
           icon={
             <VectorIcon
               type={"Ionicons"}
-              name="search"
-              color={Colors["primary-blue"]}
-              size={28}
+              name="ellipsis-horizontal"
+              color={Colors["primary-white"]}
+              size={30}
             />
           }
         />
       </View>
-      <View style={{ marginTop: height * 0.015 }}>
-        {RecentChatList.map((chats, index) => (
-          <TouchableOpacity key={index}>
-            <RecentScrollView
-              title="R E C E N T"
-              img={PentiaLogo}
-              username="Barry"
-            />
-          </TouchableOpacity>
-        ))}
+      {/* Recent-content view */}
+      <View style={{ marginTop: height * 0.018 }}>
+        <Text
+          style={{
+            fontFamily: "Montserrat-Medium",
+            fontSize: 12,
+            color: Colors["primary-yellow"],
+            paddingLeft: 25,
+          }}
+        >
+          R E C E N T
+        </Text>
+        <View style={{ marginTop: height * 0.02 }}>
+          <RecentScrollView />
+        </View>
       </View>
 
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: height * 0.2,
-        }}
-      >
-        <View>
-          <Text className="text-center">Hi {user?.username}</Text>
-
-          <Text className="text-center">
-            You are logged in! ChatRoomScreenChatRoomScreenChatRoomScreen
-          </Text>
-          <Text className="text-center">All the chats are displayed here</Text>
-        </View>
-
-        <View className="items-end">
-          <TouchableOpacity onPress={() => logout()}>
-            {/* <VectorIcon
-            type="Entypo"
-            name="chevron-left"
-            color="black"
-            size={24}
-          /> */}
-            <Animated.Image
-              entering={FlipInYLeft}
-              exiting={FlipOutYRight}
-              source={PentiaLogo}
-              className="h-10 w-10"
-            />
-          </TouchableOpacity>
-        </View>
+      {/* List of all chat rooms - view */}
+      <View style={{ marginTop: height * 0.04 }}>
+        <ChatRoomScrollList />
       </View>
     </View>
   );

@@ -15,7 +15,7 @@ import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CustomKeyBoardView from "../../components/generic/scrollviews/keyboard-view/CustomKeyBoardView";
+import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, database } from "../../firebase/FirebaseConfig";
 import AuthInput from "../../components/authentication/auth-input/AuthInput";
@@ -195,7 +195,7 @@ const LoginScreen = () => {
             >
               <Text
                 style={{
-                  color: "#FFFFFF",
+                  color: Colors["primary-white"],
                   fontSize: 20,
                   fontFamily: "Montserrat-SemiBold",
                 }}
