@@ -4,22 +4,23 @@ import PentiaLogo from "../../assets/images/LogoImgs/PentiaLogo.png";
 import { Dimensions } from "react-native";
 import Animated, { FlipInYLeft, FlipOutYRight } from "react-native-reanimated";
 import { useAuth } from "../../context/UserContext";
-import ChatListHeader from "../../components/generic/headers/ChatListHeader";
+import ChatRoomListHeader from "../../components/generic/headers/ChatRoomsListHeader";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Colors from "../../utils/constants/Colors";
-import RecentScrollView from "../../components/chat/scrolls/RecentScrollView";
-import ChatRoomScrollList from "../../components/chat/scroll-list/ChatRoomScrollList";
-const { width, height } = Dimensions.get("window");
+import RecentChatList from "../../components/chat/scroll-list/RecentChatList";
+import ChatRoomList from "../../components/chat/scroll-list/ChatRoomList";
 
 const ChatRoomScreen = () => {
   const { user } = useAuth();
+  const { width, height } = Dimensions.get("window");
+
   console.log("userdata ChatRoom", user);
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors["primary-darkbg"] }}>
       {/* Header - view */}
       <View style={{ marginTop: height * 0.035 }}>
-        <ChatListHeader
+        <ChatRoomListHeader
           title="Messages"
           icon={
             <VectorIcon
@@ -44,13 +45,13 @@ const ChatRoomScreen = () => {
           R E C E N T
         </Text>
         <View style={{ marginTop: height * 0.02 }}>
-          <RecentScrollView />
+          <RecentChatList />
         </View>
       </View>
 
       {/* List of all chat rooms - view */}
       <View style={{ marginTop: height * 0.04 }}>
-        <ChatRoomScrollList />
+        <ChatRoomList />
       </View>
     </View>
   );

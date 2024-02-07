@@ -21,12 +21,12 @@ import pb9 from "../../../assets/images/dummy-data/Ellipse9.png";
 import pb10 from "../../../assets/images/dummy-data/Ellipse10.png";
 import pb11 from "../../../assets/images/dummy-data/Ellipse11.png";
 
-type RecentScrollViewProps = {
+type RecentChatListProps = {
   // img?: ImageSourcePropType | undefined;
   // username?: string;
 };
 
-const RecentChatList = [
+const ChatList = [
   {
     img: pb7,
     username: "Emil",
@@ -73,7 +73,7 @@ const RecentChatList = [
   },
 ];
 
-const RecentScrollView: React.FC = () => {
+const RecentChatList: React.FC = () => {
   return (
     <ScrollView
       horizontal
@@ -83,7 +83,7 @@ const RecentScrollView: React.FC = () => {
         paddingHorizontal: 25, // for nicer corner at the end of the scroll aswell
       }}
     >
-      {RecentChatList.map((recentChats, key) => (
+      {ChatList.map((recentChats, key) => (
         <TouchableOpacity key={key} style={{ alignItems: "center", gap: 8 }}>
           <RecentViewAvatar imgUrl={recentChats.img} />
           <Text
@@ -101,4 +101,4 @@ const RecentScrollView: React.FC = () => {
   );
 };
 
-export default RecentScrollView;
+export default RecentChatList;

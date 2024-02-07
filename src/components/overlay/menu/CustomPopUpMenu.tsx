@@ -26,13 +26,13 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
   return (
     <Animated.View>
       <Menu>
-        <MenuTrigger>{icon}</MenuTrigger>
+        <MenuTrigger style={{ alignItems: "center" }}>{icon}</MenuTrigger>
         <MenuOptions
           customStyles={{
             optionsContainer: {
               borderRadius: 10,
               backgroundColor: Colors["primary-bgcolor"],
-              marginTop: 30,
+              marginTop: 45,
               marginLeft: -10,
             },
           }}

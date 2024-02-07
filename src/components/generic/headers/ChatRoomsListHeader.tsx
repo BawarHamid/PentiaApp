@@ -3,12 +3,15 @@ import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
 import CustomPopUpMenu from "../../overlay/menu/CustomPopUpMenu";
 
-type ChatListHeaderProps = {
+type ChatRoomListHeaderProps = {
   title: string;
   icon: ReactElement;
 };
 
-const ChatListHeader: React.FC<ChatListHeaderProps> = ({ title, icon }) => {
+const ChatRoomListHeader: React.FC<ChatRoomListHeaderProps> = ({
+  title,
+  icon,
+}) => {
   return (
     <View
       style={{
@@ -32,4 +35,4 @@ const ChatListHeader: React.FC<ChatListHeaderProps> = ({ title, icon }) => {
   );
 };
 
-export default ChatListHeader;
+export default ChatRoomListHeader;

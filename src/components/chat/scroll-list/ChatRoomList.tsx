@@ -26,9 +26,10 @@ import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 import VectorIcon from "../../../assets/icons/VectorIcons";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { database } from "../../../firebase/FirebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 
-const RecentChatList = [
+const ChatRoomsList = [
   {
     img: pb7,
     username: "Emil",
@@ -123,11 +124,12 @@ const RecentChatList = [
   },
 ];
 
-const ChatRoomScrollList: React.FC = () => {
+const ChatRoomList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = React.useState(false);
   const listRef = useRef<FlatList>(null);
   const [chatRooms, setChatRooms] = useState(null);
+  const navigation = useNavigation();
 
   useLayoutEffect(() => {
     const chatRoomQuery = query(
@@ -135,13 +137,13 @@ const ChatRoomScrollList: React.FC = () => {
       orderBy("chatroomId", "desc")
     );
 
-    const listenerStop = onSnapshot(chatRoomQuery, (querySnapShot) => {
+    const unsub = onSnapshot(chatRoomQuery, (querySnapShot) => {
       const rooms = querySnapShot.docs.map((doc) => doc.data());
       setChatRooms(rooms);
       setLoading(false);
     });
 
-    return listenerStop;
+    return unsub;
   }, []);
 
   const onRefresh = useCallback(() => {
@@ -152,7 +154,6 @@ const ChatRoomScrollList: React.FC = () => {
   }, []);
 
   if (loading) {
-    // A loading indicator is triggered, while waiting for auth state
     return (
       <ActivityIndicator
         style={[
@@ -169,17 +170,18 @@ const ChatRoomScrollList: React.FC = () => {
   }
 
   const renderChatItem: ListRenderItem<any> = ({ item }) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => (navigation as any).navigate("Chat", { item: item })}
+    >
       <Animated.View
         entering={FadeInRight}
         exiting={FadeOutLeft}
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginBottom: 30, // gap between the chats
+          marginBottom: height * 0.04, // gap between the chats
         }}
       >
-        {/* <ChatRoomScrollListAvatar imgUrl={item.img} /> */}
         <View
           style={{
             marginLeft: 20,
@@ -200,23 +202,13 @@ const ChatRoomScrollList: React.FC = () => {
             style={{
               fontFamily: "Montserrat-SemiBold",
               fontSize: 12,
-              color: "#9CA3AF",
+              color: Colors["primary-medium-grey"],
             }}
           >
             {item.description}
           </Text>
         </View>
         <View style={{ alignItems: "flex-end" }}>
-          {/* <Text
-            style={{
-              fontFamily: "Montserrat-SemiBold",
-              fontSize: 14,
-              color: "#9CA3AF",
-            }}
-          >
-            {item.messageDate}
-          </Text> */}
-
           <VectorIcon
             type={"Ionicons"}
             name="chevron-forward"
@@ -233,6 +225,7 @@ const ChatRoomScrollList: React.FC = () => {
       ref={listRef}
       data={chatRooms}
       renderItem={renderChatItem}
+      keyExtractor={(item, index) => index.toString()}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
@@ -243,11 +236,8 @@ const ChatRoomScrollList: React.FC = () => {
         paddingHorizontal: 25,
         paddingTop: height * 0.045,
       }}
-      // ListFooterComponent={() => (
-      //   <Animated.View style={{ height: height * 0.5 }} />
-      // )}
     />
   );
 };
 
-export default ChatRoomScrollList;
+export default ChatRoomList;
