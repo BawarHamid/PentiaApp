@@ -1,17 +1,8 @@
-// import { initializeApp } from "firebase/app";
-// import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-// import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-// import { getAuth } from "firebase/auth";
-// import { getFirestore } from "firebase/firestore";
-
 import { initializeApp } from "firebase/app";
-import {
-  initializeAuth,
-  getAuth,
-  getReactNativePersistence,
-} from "firebase/auth";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import { getFirestore, collection } from "firebase/firestore";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { getStorage } from "firebase/storage";
 
 // Firebase config
 const firebaseConfig = {
@@ -22,14 +13,6 @@ const firebaseConfig = {
   messagingSenderId: "830333589171",
   appId: "1:830333589171:web:d5bad1a69a178d473782c6",
 };
-// initialize firebase
-// const authStorage = initializeAuth(app, {
-//   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-// });
-
-// initializeApp(firebaseConfig);
-// export const auth = getAuth();
-// export const database = getFirestore();
 
 // Initialize Firebase app
 const firebaseApp = initializeApp(firebaseConfig);

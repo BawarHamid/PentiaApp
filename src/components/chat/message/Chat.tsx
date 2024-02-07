@@ -5,7 +5,7 @@ import Colors from "../../../utils/constants/Colors";
 const Chat = ({ route }) => {
   const [chat, setChat] = useState(null);
   const { item } = route.params;
-  console.log("chatroom Info:", item);
+  // console.log("chatroom Info:", item);
   return (
     <View
       style={{

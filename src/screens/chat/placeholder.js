@@ -6,7 +6,13 @@ import VectorIcon from "../../assets/icons/VectorIcons";
 import Chat from "../../components/chat/message/Chat";
 import MessageTextInput from "../../components/chat/message/MessageTextInput";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
-import { Timestamp, addDoc, collection, doc } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { useAuth } from "../../context/UserContext";
 import { database } from "../../firebase/FirebaseConfig";
 import ImagePicker from "react-native-image-crop-picker";
@@ -18,6 +24,69 @@ const ChatScreen = ({ route }) => {
   const { item } = route.params;
   const { user } = useAuth();
 
+  // const handleSendChatMessage = async () => {
+  //   if (!message.trim()) {
+  //     Alert.alert("Message Error", "Please type something!");
+  //     return;
+  //   }
+
+  //   // Loading triggered
+  //   // setLoading(true);
+
+  //   try {
+  //     const currentTimeStamp = serverTimestamp();
+  //     const newDoc = {
+  //       timeCreated: currentTimeStamp,
+  //       // timeCreated: Timestamp.fromDate(new Date()),
+  //       chatroomId: item.chatroomId,
+  //       message: message,
+  //       userId: user?.uid,
+  //       username: user?.username,
+  //     };
+
+  //     await addDoc(
+  //       collection(doc(database, "chatrooms", item.chatroomId), "messages"),
+  //       newDoc
+  //     )
+  //       .then(() => {
+  //         setMessage(""); // Im clearing the messageinput after sending
+  //         // setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         // setLoading(false);
+  //         console.log("message", newDoc);
+
+  //         // Error codes er fundet på nedestående sider
+  //         //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
+  //         //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
+  //         let errorMessage = "Failed to send message. Please try again.";
+  //         switch (error.code) {
+  //           case "permission-denied":
+  //             errorMessage =
+  //               "You don't have permission to perform this action.";
+  //             break;
+  //           case "unavailable":
+  //             errorMessage =
+  //               "The service is currently unavailable. Please try again later.";
+  //             break;
+  //           case "resource-exhausted":
+  //             errorMessage =
+  //               "You've reached a service limit. Please try again later.";
+  //             break;
+  //           case "deadline-exceeded":
+  //             errorMessage =
+  //               "The request took too long to complete. Please try again.";
+  //             break;
+  //         }
+  //         Alert.alert("Error", errorMessage);
+  //         return;
+  //       });
+  //   } catch (error: any) {
+  //     Alert.alert("Error:", error.message);
+  //     return;
+  //   }
+  // };
+
   const handleSendChatMessage = async () => {
     if (!message.trim()) {
       Alert.alert("Message Error", "Please type something!");
@@ -28,14 +97,15 @@ const ChatScreen = ({ route }) => {
     // setLoading(true);
 
     try {
-      // const currentTimeStamp = serverTimestamp();
+      const currentTimeStamp = serverTimestamp();
       const newDoc = await addDoc(
-        collection(doc(database, "chatrooms", item.chatroomId), "messages"),
+        collection(doc(database, "chatroom", item.chatroomId), "messages"),
         {
-          username: user?.username, //Name/username of sender
-          message: message, //Message text
-          timeCreated: Timestamp.fromDate(new Date()), //Message date
+          timeCreated: currentTimeStamp,
+          // timeCreated: Timestamp.fromDate(new Date()),
           chatroomId: item.chatroomId,
+          message: message,
+          username: user?.username,
           userId: user?.userId,
         }
       )
@@ -45,6 +115,8 @@ const ChatScreen = ({ route }) => {
         })
         .catch((error) => {
           // setLoading(false);
+          console.log("message", newDoc);
+
           // Error codes er fundet på nedestående sider
           //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
           //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
@@ -130,7 +202,6 @@ const ChatScreen = ({ route }) => {
       </View>
       <View style={{ paddingTop: 4 }}>
         <MessageTextInput
-          disabled={!message}
           onPress={handleSendChatMessage}
           value={message}
           changeCallback={setMessage}

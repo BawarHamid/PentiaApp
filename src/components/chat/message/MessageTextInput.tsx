@@ -8,6 +8,7 @@ import {
   StyleProp,
   KeyboardTypeOptions,
   Dimensions,
+  GestureResponderEvent,
 } from "react-native";
 import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
@@ -17,12 +18,14 @@ type MessageTextInputProps = {
   placeholder?: string;
   placeholderTextColor?: ColorValue | undefined;
   iconRight: ReactElement;
-  value?: string;
-  changeCallback?: React.Dispatch<React.SetStateAction<string>>;
+  value: string;
+  changeCallback: React.Dispatch<React.SetStateAction<string>>;
   style?: StyleProp<TextStyle> | undefined;
   autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
   keyboardType?: KeyboardTypeOptions | undefined;
   secureTextEntry?: boolean | undefined;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  disabled?: boolean;
 };
 
 const MessageTextInput: React.FC<MessageTextInputProps> = ({
@@ -36,6 +39,8 @@ const MessageTextInput: React.FC<MessageTextInputProps> = ({
   autoCapitalize,
   keyboardType,
   secureTextEntry,
+  onPress,
+  disabled,
 }) => {
   const { width, height } = Dimensions.get("window");
   return (
@@ -64,17 +69,20 @@ const MessageTextInput: React.FC<MessageTextInputProps> = ({
           {iconLeft}
         </TouchableOpacity>
         <TextInput
-          style={{
-            color: Colors["primary-white"],
-            fontFamily: "Montserrat-Medium",
-            fontSize: 14,
-            width: width * 0.6,
-            textAlign: "left",
-          }}
+          onChangeText={changeCallback}
+          value={value}
+          style={style}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
+          autoCapitalize={autoCapitalize}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
         />
-        <TouchableOpacity style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={onPress}
+          disabled={disabled}
+        >
           {iconRight}
         </TouchableOpacity>
       </View>
