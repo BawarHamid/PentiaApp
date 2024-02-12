@@ -7,16 +7,19 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import CornerImg from "../../assets/images/CornerShape.png";
-import PentiaLogo from "../../assets/images/LogoImgs/PentiaLogo.png";
+import CornerImgWhite from "../../assets/images/CornerShapeLight.png";
+import PentiaLight from "../../assets/images/LogoImgs/PentiaLight.png";
 import Colors from "../../utils/constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
-import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  BounceInRight,
+  BounceOut,
+} from "react-native-reanimated";
 import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
-import { useAuth } from "../../context/UserContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, database } from "../../firebase/FirebaseConfig";
@@ -47,6 +50,7 @@ const RegisterScreen = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       Alert.alert("Registration Error", "Please enter a valid email address.");
+      setEmail("");
       return;
     }
 
@@ -64,22 +68,22 @@ const RegisterScreen = () => {
       })
       .then(() => {
         setLoading(false);
-        // Navigate to next screen or show success message
-        // Alert.alert("Success", "Registration successful!");
       })
       .catch((error) => {
         setLoading(false);
-
         // Error codes er fundet på nedestående sider
         //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
         //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
         let errorMessage = "Registration failed. Please try again";
         if (error.code === "auth/email-already-in-use") {
           errorMessage = "The email address is already in use";
+          setEmail("");
         } else if (error.code === "auth/weak-password") {
           errorMessage = "The password is too weak";
+          setPassword("");
         } else if (error.code === "auth/invalid-email") {
           errorMessage = "The email address is not valid";
+          setEmail("");
         }
         Alert.alert("Registration Error", errorMessage);
       });
@@ -88,7 +92,7 @@ const RegisterScreen = () => {
   return (
     <CustomKeyBoardView>
       <View style={{ position: "absolute", alignItems: "center" }}>
-        <Animated.Image source={CornerImg} />
+        <Animated.Image source={CornerImgWhite} entering={BounceInRight} />
       </View>
       <View
         style={{
@@ -102,22 +106,22 @@ const RegisterScreen = () => {
           style={{
             fontFamily: "Montserrat-Bold",
             fontSize: 18,
-            color: Colors["primary-black"],
+            color: Colors["primary-yellow"],
           }}
         >
           Welcome to Chat Chat
         </Text>
         <Text
           style={{
-            fontFamily: "Montserrat-Medium",
+            fontFamily: "Montserrat-Bold",
             fontSize: 14,
-            color: Colors["primary-medium-black"],
+            color: Colors["primary-white"],
           }}
         >
           Let's create an account together!
         </Text>
         <Animated.Image
-          source={PentiaLogo}
+          source={PentiaLight}
           // style={{ width: width * 0.33, height: height * 0.17 }}
           style={{ width: 144, height: 144 }}
           entering={BounceIn}
@@ -134,10 +138,10 @@ const RegisterScreen = () => {
               value={username}
               autoCapitalize="none"
               placeholder="Username"
-              placeholderTextColor={Colors["primary-grey"]}
+              placeholderTextColor={Colors["primary-medium-grey"]}
               style={[
                 defaultStyles.inputField,
-                { borderColor: Colors["primary-cyan"] },
+                { borderColor: Colors["primary-yellow"] },
               ]}
             />
           </View>
@@ -149,10 +153,10 @@ const RegisterScreen = () => {
               autoCapitalize="none"
               keyboardType="email-address"
               placeholder="Email address"
-              placeholderTextColor={Colors["primary-grey"]}
+              placeholderTextColor={Colors["primary-medium-grey"]}
               style={[
                 defaultStyles.inputField,
-                { borderColor: Colors["primary-cyan"] },
+                { borderColor: Colors["primary-yellow"] },
               ]}
             />
           </View>
@@ -163,10 +167,10 @@ const RegisterScreen = () => {
               value={password}
               autoCapitalize="none"
               placeholder="Password"
-              placeholderTextColor={Colors["primary-grey"]}
+              placeholderTextColor={Colors["primary-medium-grey"]}
               style={[
                 defaultStyles.inputField,
-                { borderColor: Colors["primary-cyan"] },
+                { borderColor: Colors["primary-yellow"] },
               ]}
               secureTextEntry={!showPassword}
               icon={
@@ -174,7 +178,7 @@ const RegisterScreen = () => {
                   type="Ionicons"
                   name={showPassword ? "eye" : "eye-off"}
                   size={24}
-                  color={Colors["primary-cyan"]}
+                  color={Colors["primary-black"]}
                   onPress={toggleShowPassword}
                   style={styles.eyeIcon}
                 />
@@ -188,14 +192,13 @@ const RegisterScreen = () => {
             <ActivityIndicator size="large" color={Colors["primary-cyan"]} />
           ) : (
             <TouchableOpacity
-              // disabled={!email || !password || (!email && !password)}
               style={defaultStyles.authBtn}
-              className="active:bg-primary-cyan active:opacity-50"
+              className="active:bg-primary-yellow active:opacity-50"
               onPress={handleRegister}
             >
               <Text
                 style={{
-                  color: Colors["primary-white"],
+                  color: Colors["primary-black"],
                   fontSize: 20,
                   fontFamily: "Montserrat-SemiBold",
                 }}
@@ -222,7 +225,7 @@ const RegisterScreen = () => {
                 style={{
                   fontFamily: "Montserrat-SemiBold",
                   fontSize: 14,
-                  color: Colors["primary-black"],
+                  color: Colors["primary-white"],
                 }}
               >
                 Already have an account? {""}
@@ -231,7 +234,7 @@ const RegisterScreen = () => {
                 style={{
                   fontFamily: "Montserrat-SemiBold",
                   fontSize: 14,
-                  color: Colors["primary-cyan"],
+                  color: Colors["primary-yellow"],
                 }}
               >
                 Sign in here!
@@ -244,7 +247,7 @@ const RegisterScreen = () => {
           <View
             style={{
               flex: 1,
-              borderBottomColor: "#000000",
+              borderBottomColor: Colors["primary-white"],
               borderBottomWidth: StyleSheet.hairlineWidth,
             }}
           />
@@ -252,7 +255,7 @@ const RegisterScreen = () => {
           <View
             style={{
               flex: 1,
-              borderBottomColor: "#000000",
+              borderBottomColor: Colors["primary-white"],
               borderBottomWidth: StyleSheet.hairlineWidth,
             }}
           />

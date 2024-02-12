@@ -5,14 +5,18 @@ import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export const defaultStyles = StyleSheet.create({
-  container: {
+  containerLightTheme: {
     flex: 1,
     backgroundColor: Colors["primary-bgcolor"],
+  },
+  containerDarkTheme: {
+    flex: 1,
+    backgroundColor: Colors["primary-darkbg"],
   },
   inputField: {
     height: 50,
     width: width * 0.85,
-    color: Colors["primary-medium-black"],
+    color: Colors["primary-black"],
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
@@ -21,7 +25,7 @@ export const defaultStyles = StyleSheet.create({
     backgroundColor: Colors["primary-white"],
   },
   authBtn: {
-    backgroundColor: Colors["primary-cyan"],
+    backgroundColor: Colors["primary-yellow"],
     height: 55,
     width: width * 0.85,
     borderRadius: 8,
@@ -43,7 +47,6 @@ export const defaultStyles = StyleSheet.create({
   },
   socialsBtnSmall: {
     backgroundColor: Colors["primary-white"],
-    borderColor: Colors["primary-medium-black"],
     height: height * 0.05,
     width: width * 0.15,
     borderRadius: 8,
@@ -111,6 +114,6 @@ export const stylesLogin = StyleSheet.create({
   },
   textSeparator: {
     fontFamily: "Montserrat-SemiBold",
-    color: Colors["primary-cyan"],
+    color: Colors["primary-yellow"],
   },
 });

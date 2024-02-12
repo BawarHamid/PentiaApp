@@ -56,7 +56,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     return (
       <ActivityIndicator
         style={[
-          defaultStyles.container,
+          defaultStyles.containerLightTheme,
           { alignItems: "center", justifyContent: "center" },
         ]}
         size="large"

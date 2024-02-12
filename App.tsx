@@ -11,9 +11,7 @@ const App: React.FC = () => {
     <MenuProvider>
       <UserContextProvider>
         <StatusBar backgroundColor={Colors["primary-medium-black"]} />
-        <View style={defaultStyles.container}>
-          <AppNavigator />
-        </View>
+        <AppNavigator />
       </UserContextProvider>
     </MenuProvider>
   );

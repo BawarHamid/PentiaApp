@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "830333589171",
+    "project_id": "pentia-chatapp-8f740",
+    "storage_bucket": "pentia-chatapp-8f740.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830333589171:android:cb5fa5e7931ea3693782c6",
+        "android_client_info": {
+          "package_name": "com.ChatChat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830333589171-eplkthdu7dhtudulbji8q57smp24k15o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ChatChat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "830333589171-s2u18mfr5mbr7h5h7o4e5u9nh6vj4f9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYenTNEcHB4bQIm2dFs1eWyVU48_-pPr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830333589171-s2u18mfr5mbr7h5h7o4e5u9nh6vj4f9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

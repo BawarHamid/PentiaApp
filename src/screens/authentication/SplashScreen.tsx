@@ -25,7 +25,7 @@ const SplashScreen = () => {
   return (
     <View
       style={[
-        defaultStyles.container,
+        defaultStyles.containerLightTheme,
         { alignItems: "center", justifyContent: "center" },
       ]}
     >

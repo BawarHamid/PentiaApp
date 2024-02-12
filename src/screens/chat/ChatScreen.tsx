@@ -1,4 +1,11 @@
-import { View, Text, Dimensions, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  ActivityIndicator,
+  Alert,
+  Keyboard,
+} from "react-native";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import Colors from "../../utils/constants/Colors";
 import ChatHeader from "../../components/generic/headers/ChatHeader";
@@ -10,6 +17,7 @@ import { Timestamp, addDoc, collection, doc } from "firebase/firestore";
 import { useAuth } from "../../context/UserContext";
 import { database } from "../../firebase/FirebaseConfig";
 import ImagePicker from "react-native-image-crop-picker";
+import Message from "../../components/chat/message/Message";
 
 const ChatScreen = ({ route }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,7 +37,7 @@ const ChatScreen = ({ route }) => {
 
     try {
       // const currentTimeStamp = serverTimestamp();
-      const newDoc = await addDoc(
+      await addDoc(
         collection(doc(database, "chatrooms", item.chatroomId), "messages"),
         {
           username: user?.username, //Name/username of sender
@@ -41,6 +49,7 @@ const ChatScreen = ({ route }) => {
       )
         .then(() => {
           setMessage(""); // Im clearing the messageinput after sending
+          Keyboard.dismiss(); //closing the keyboard after sending the message.
           // setLoading(false);
         })
         .catch((error) => {
@@ -127,10 +136,12 @@ const ChatScreen = ({ route }) => {
       </View>
       <View style={{ marginTop: height * 0.09, flex: 1 }}>
         {/* <Chat route={route} /> */}
+
+        <Message route={route} />
       </View>
       <View style={{ paddingTop: 4 }}>
         <MessageTextInput
-          disabled={!message}
+          // disabled={!message}
           onPress={handleSendChatMessage}
           value={message}
           changeCallback={setMessage}

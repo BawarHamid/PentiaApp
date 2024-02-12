@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-import { getFirestore, collection } from "firebase/firestore";
+import { initializeAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import { getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-import { getStorage } from "firebase/storage";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyA-j_oyJp36FtdQYYoUmozA9RniG8OatFo",
   authDomain: "pentia-chatapp-8f740.firebaseapp.com",
@@ -15,15 +15,20 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase app
-const firebaseApp = initializeApp(firebaseConfig);
+// getting this error: No Firebase App ‘[DEFAULT]’ has been created — call Firebase App.initializeApp()
+// const firebaseApp = initializeApp(firebaseConfig);
 
-// Initialize Firebase auth with persistence using React Native AsyncStorage
+let firebaseApp;
+if (firebase.apps.length === 0) {
+  firebaseApp = initializeApp(firebaseConfig);
+} else {
+  firebaseApp = firebase.app();
+}
+
+console.log("Firebase app initialized:", firebaseApp);
+
 export const auth = initializeAuth(firebaseApp, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 
-// Initialize Firestore
 export const database = getFirestore(firebaseApp);
-
-export const userProfileRef = collection(database, "userprofile");
-export const chatroomRef = collection(database, "chatroom");
