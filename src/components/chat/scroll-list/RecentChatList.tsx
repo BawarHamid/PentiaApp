@@ -21,11 +21,6 @@ import pb9 from "../../../assets/images/dummy-data/Ellipse9.png";
 import pb10 from "../../../assets/images/dummy-data/Ellipse10.png";
 import pb11 from "../../../assets/images/dummy-data/Ellipse11.png";
 
-type RecentChatListProps = {
-  // img?: ImageSourcePropType | undefined;
-  // username?: string;
-};
-
 const ChatList = [
   {
     img: pb7,
@@ -73,7 +68,7 @@ const ChatList = [
   },
 ];
 
-const RecentChatList: React.FC = () => {
+const RecentChatList = () => {
   return (
     <ScrollView
       horizontal

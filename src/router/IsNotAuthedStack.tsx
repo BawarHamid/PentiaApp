@@ -6,13 +6,14 @@ import RegisterScreen from "../screens/authentication/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
-const IsNotAuthStack = () => {
+const IsNotAuthedStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="SplashScreen"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
+
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -30,4 +31,4 @@ const IsNotAuthStack = () => {
   );
 };
 
-export default IsNotAuthStack;
+export default IsNotAuthedStack;

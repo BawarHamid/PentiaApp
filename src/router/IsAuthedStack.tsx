@@ -5,7 +5,7 @@ import SplashScreen from "../screens/authentication/SplashScreen";
 import ChatScreen from "../screens/chat/ChatScreen";
 const Stack = createNativeStackNavigator();
 
-const IsAuthStack = () => {
+const IsAuthedStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="SplashScreen"
@@ -37,4 +37,4 @@ const IsAuthStack = () => {
   );
 };
 
-export default IsAuthStack;
+export default IsAuthedStack;

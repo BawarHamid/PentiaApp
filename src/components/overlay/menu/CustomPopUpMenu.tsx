@@ -7,14 +7,8 @@ import {
   MenuTrigger,
 } from "react-native-popup-menu";
 import Colors from "../../../utils/constants/Colors";
-import { useAuth } from "../../../context/UserContext";
 import VectorIcon from "../../../assets/icons/VectorIcons";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  PinwheelIn,
-  PinwheelOut,
-} from "react-native-reanimated";
+import { useAuth } from "../../../context/useAuth";
 
 type PopUpMenuProps = {
   icon: ReactElement;
@@ -24,7 +18,7 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
   const { user, logout } = useAuth();
 
   return (
-    <Animated.View>
+    <View>
       <Menu>
         <MenuTrigger style={{ alignItems: "center" }}>{icon}</MenuTrigger>
         <MenuOptions
@@ -54,7 +48,8 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
                 alignItems: "center",
               }}
             >
-              Hi {user?.username}
+              {/* show email if there's no name from social login fb/google */}
+              Hi {user?.displayName ? user.displayName : user?.email}
             </Text>
           </MenuOption>
 
@@ -110,7 +105,7 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
           </MenuOption> */}
         </MenuOptions>
       </Menu>
-    </Animated.View>
+    </View>
   );
 };
 

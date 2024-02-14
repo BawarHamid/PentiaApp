@@ -6,30 +6,29 @@ import {
   RefreshControl,
   FlatList,
   ListRenderItem,
-  ActivityIndicator,
   Alert,
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-
 import Colors from "../../../utils/constants/Colors";
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 import VectorIcon from "../../../assets/icons/VectorIcons";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { database } from "../../../firebase/FirebaseConfig";
 import { useNavigation } from "@react-navigation/native";
+import { chatrooms } from "../../../types/Types";
+import LottieView from "lottie-react-native";
 const { width, height } = Dimensions.get("window");
 
 const ChatRoomList = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = React.useState(false);
   const listRef = useRef<FlatList>(null);
-  const [chatRooms, setChatRooms] = useState(null);
+  const [chatRooms, setChatRooms] = useState<chatrooms[]>([]);
   const navigation = useNavigation();
 
   const getChatRooms = useCallback(async () => {
     try {
       if (!refreshing) {
-        // Only show the loading indicator if not already refreshing
         setLoading(true);
       }
       const chatRoomQuery = query(
@@ -47,6 +46,7 @@ const ChatRoomList = () => {
       return () => unsub();
     } catch (error) {
       Alert.alert(String(error));
+      console.log("ChatRooms Error:", error);
     }
   }, []);
 
@@ -61,21 +61,30 @@ const ChatRoomList = () => {
 
   if (loading) {
     return (
-      <ActivityIndicator
+      <View
         style={[
           {
-            alignItems: "center",
             justifyContent: "center",
-            marginTop: height * 0.2,
+            alignItems: "center",
           },
         ]}
-        size="large"
-        color={Colors["primary-yellow"]}
-      />
+      >
+        <LottieView
+          source={require("../../../assets/Animations/Loadings/LoadingAnimation1.json")}
+          autoPlay
+          loop
+          resizeMode="cover"
+          style={{
+            width: width * 0.2,
+            height: height * 0.2,
+            marginTop: height * 0.2,
+          }}
+        />
+      </View>
     );
   }
   // console.log("chatrooms", chatRooms);
-  const renderChatItem: ListRenderItem<any> = ({ item }) => (
+  const renderChatItem: ListRenderItem<chatrooms> = ({ item }) => (
     <TouchableOpacity
       onPress={() => (navigation as any).navigate("Chat", { item: item })}
     >

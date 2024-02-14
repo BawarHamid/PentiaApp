@@ -1,22 +1,11 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import CornerImgWhite from "../../assets/images/CornerShapeLight.png";
 import PentiaLight from "../../assets/images/LogoImgs/PentiaLight.png";
 import Colors from "../../utils/constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
-import Animated, {
-  BounceIn,
-  BounceInRight,
-  BounceOut,
-} from "react-native-reanimated";
-import { defaultStyles, stylesLogin } from "../../utils/constants/Styles";
+import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
+import { defaultStyles } from "../../utils/constants/Styles";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
@@ -24,7 +13,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, database } from "../../firebase/FirebaseConfig";
 import AuthInput from "../../components/authentication/auth-input/AuthInput";
-import SocialLoginButton from "../../components/authentication/social-login-buttons/SocialLoginButton";
+import SocialLoginForm from "../../components/authentication/SocialLoginForm";
+import LottieView from "lottie-react-native";
 const { width, height } = Dimensions.get("window");
 
 const RegisterScreen = () => {
@@ -33,7 +23,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const navigtion = useNavigation();
+  const navigation = useNavigation();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -92,14 +82,14 @@ const RegisterScreen = () => {
   return (
     <CustomKeyBoardView>
       <View style={{ position: "absolute", alignItems: "center" }}>
-        <Animated.Image source={CornerImgWhite} entering={BounceInRight} />
+        <Animated.Image source={CornerImgWhite} />
       </View>
       <View
         style={{
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
-          marginTop: height * 0.15,
+          marginTop: height * 0.16,
         }}
       >
         <Text
@@ -129,7 +119,7 @@ const RegisterScreen = () => {
         />
       </View>
       {/* form-view start */}
-      <View style={{ marginTop: height * 0.01 }}>
+      <View style={{ marginTop: height * 0.001 }}>
         <View style={{ alignItems: "center" }}>
           {/* input for username */}
           <View style={{ marginTop: height * 0.015 }}>
@@ -189,7 +179,16 @@ const RegisterScreen = () => {
         {/* submit btn */}
         <View style={{ marginTop: height * 0.032, alignItems: "center" }}>
           {loading ? (
-            <ActivityIndicator size="large" color={Colors["primary-cyan"]} />
+            <LottieView
+              source={require("../../assets/Animations/Loadings/LoadingAnimation1.json")}
+              autoPlay
+              loop
+              resizeMode="cover"
+              style={{
+                width: width * 0.2,
+                height: height * 0.2,
+              }}
+            />
           ) : (
             <TouchableOpacity
               style={defaultStyles.authBtn}
@@ -210,9 +209,9 @@ const RegisterScreen = () => {
         </View>
 
         {/* route to login */}
-        <View style={{ marginTop: width * 0.08 }}>
+        <View style={{ marginTop: width * 0.03 }}>
           <TouchableOpacity
-            onPress={() => navigtion.navigate("Login" as never)}
+            onPress={() => navigation.navigate("Login" as never)}
           >
             <View
               style={{
@@ -242,64 +241,7 @@ const RegisterScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        {/* View separator */}
-        <View style={[stylesLogin.viewSeparator, { marginTop: height * 0.03 }]}>
-          <View
-            style={{
-              flex: 1,
-              borderBottomColor: Colors["primary-white"],
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
-          <Text style={stylesLogin.textSeparator}>Or continue with</Text>
-          <View
-            style={{
-              flex: 1,
-              borderBottomColor: Colors["primary-white"],
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
-        </View>
-        {/* social btns */}
-        <View
-          style={{
-            gap: 12,
-            alignItems: "center",
-            justifyContent: "center",
-            marginVertical: height * 0.04,
-            flexDirection: "row",
-          }}
-        >
-          {/* btn for login with Google-account */}
-          <SocialLoginButton
-            // onPress={() => onSelectSocialAuth(Strategy.Facebook)}
-            style={defaultStyles.socialsBtnSmall}
-            icon={
-              <VectorIcon
-                type="Ionicons"
-                name="logo-google"
-                size={24}
-                style={defaultStyles.socialBtnSmallIcon}
-                color="#4285F4"
-              />
-            }
-          />
-
-          {/* btn for login with Facebook-account */}
-          <SocialLoginButton
-            // onPress={() => onSelectSocialAuth(Strategy.Facebook)}
-            style={defaultStyles.socialsBtnSmall}
-            icon={
-              <VectorIcon
-                type="Ionicons"
-                name="logo-facebook"
-                size={24}
-                style={defaultStyles.socialBtnSmallIcon}
-                color="#0866FF"
-              />
-            }
-          />
-        </View>
+        <SocialLoginForm />
       </View>
     </CustomKeyBoardView>
   );

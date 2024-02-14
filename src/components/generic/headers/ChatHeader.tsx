@@ -30,9 +30,11 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         {iconLeft}
       </TouchableOpacity>
       <Text
+        numberOfLines={1}
+        ellipsizeMode="tail"
         style={{
           fontFamily: "Montserrat-Bold",
-          fontSize: 20,
+          fontSize: 19,
           color: Colors["primary-white"],
         }}
       >

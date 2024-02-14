@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:830333589171:android:cb5fa5e7931ea3693782c6",
+        "mobilesdk_app_id": "1:830333589171:android:c36f2b4bc9f122803782c6",
         "android_client_info": {
-          "package_name": "com.ChatChat"
+          "package_name": "com.pentiaapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "830333589171-eplkthdu7dhtudulbji8q57smp24k15o.apps.googleusercontent.com",
+          "client_id": "830333589171-nqcci1c8klicv5k8togapsp8m1d3jkpb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ChatChat",
+            "package_name": "com.pentiaapp",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
