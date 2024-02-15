@@ -115,6 +115,51 @@ const MessageList = ({ route }) => {
       {messages.length > 0 ? (
         messages.map((msgItem, index) => (
           <View key={index} style={{ marginVertical: 8 }}>
+            {/* Render timestamp */}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 10,
+              }}
+            >
+              {/* Render timestamp */}
+              <Text
+                style={{
+                  color: Colors["primary-grey"],
+                  fontFamily: "Montserrat-SemiBold",
+                  fontSize: 12,
+                }}
+              >
+                {msgItem.timeCreated.seconds !== undefined && (
+                  <>
+                    {/* Render date */}
+                    <Text>
+                      {new Date(
+                        msgItem.timeCreated.seconds * 1000
+                      ).toLocaleDateString("da-DK", {
+                        day: "2-digit",
+                        month: "short",
+                        timeZone: "Europe/Copenhagen",
+                      })}
+                    </Text>
+                    {/* Render time */}
+                    <Text>
+                      {new Date(
+                        msgItem.timeCreated.seconds * 1000
+                      ).toLocaleTimeString("da-DK", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: false,
+                        timeZone: "Europe/Copenhagen",
+                      })}
+                    </Text>
+                  </>
+                )}
+              </Text>
+            </View>
+
             {/* this is what the logged-in user see */}
             {user?.uid === msgItem.userId ? (
               <View
