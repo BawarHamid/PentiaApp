@@ -16,6 +16,7 @@ import LottieView from "lottie-react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import normalize from "react-native-normalize";
 import { defaultStyles } from "../../../utils/constants/Styles";
+import PentiaLight from "../../../assets/images/LogoImgs/PentiaLight.png";
 
 const MessageList = ({ route }) => {
   const [messages, setMessages] = useState<messages[]>([]);
@@ -230,12 +231,14 @@ const MessageList = ({ route }) => {
                     source={{ uri: msgItem.profile_picture }}
                   />
                 ) : (
-                  <VectorIcon
-                    type={"Ionicons"}
-                    name="person-circle-outline"
-                    color={Colors["primary-messagebg-grey"]}
-                    size={normalize(35)}
-                    style={{ marginRight: normalize(10) }}
+                  <Image
+                    style={{
+                      marginRight: normalize(10),
+                      width: normalize(34),
+                      height: normalize(34),
+                      borderRadius: normalize(51),
+                    }}
+                    source={PentiaLight}
                   />
                 )}
 
