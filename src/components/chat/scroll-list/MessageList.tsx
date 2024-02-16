@@ -178,17 +178,16 @@ const MessageList = ({ route }) => {
                   marginBottom: normalize(16),
                 }}
               >
-                {/* Chat bubble - you */}
-                <View
-                  style={{
-                    maxWidth: "90%",
-                    backgroundColor: Colors["primary-textinputbg"],
-                    borderRadius: normalize(21),
-                    paddingVertical: normalize(10),
-                    paddingHorizontal: normalize(10),
-                  }}
-                >
-                  {msgItem.message.startsWith("http") ? ( //used to identify if its a url or not, to get the image from firestore storage and also to decide what do display textmsg, or imgmsg
+                {/* Conditional rendering for Chat bubble - you, checks if its http then it get's the img's url */}
+                {msgItem.message.startsWith("http") ? (
+                  <View
+                    style={{
+                      maxWidth: "90%",
+                      borderRadius: normalize(21),
+                      paddingVertical: normalize(10),
+                      paddingHorizontal: normalize(10),
+                    }}
+                  >
                     <Image
                       source={{ uri: msgItem.message }}
                       style={{
@@ -197,7 +196,17 @@ const MessageList = ({ route }) => {
                         borderRadius: normalize(21),
                       }}
                     />
-                  ) : (
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      maxWidth: "80%",
+                      backgroundColor: Colors["primary-textinputbg"],
+                      borderRadius: normalize(21),
+                      paddingVertical: normalize(10),
+                      paddingHorizontal: normalize(14),
+                    }}
+                  >
                     <Text
                       style={{
                         color: Colors["primary-white"],
@@ -207,11 +216,10 @@ const MessageList = ({ route }) => {
                     >
                       {msgItem.message}
                     </Text>
-                  )}
-                </View>
+                  </View>
+                )}
               </View>
             ) : (
-              // this is what the receiver see
               <View
                 style={{
                   flexDirection: "row",
@@ -241,30 +249,25 @@ const MessageList = ({ route }) => {
                     source={PentiaLight}
                   />
                 )}
-
-                {/* Chat bubble - receiver */}
-                <View
-                  style={{
-                    maxWidth: "90%",
-                    backgroundColor: Colors["primary-messagebg-grey"],
-                    borderRadius: normalize(21),
-                    paddingVertical: normalize(10),
-                    paddingHorizontal: normalize(10),
-                  }}
-                >
-                  <Text
+                {msgItem.message.startsWith("http") ? (
+                  <View
                     style={{
-                      color: Colors["primary-yellow"],
-                      fontFamily: "Montserrat-Medium",
-                      fontSize: normalize(14),
-                      marginBottom: msgItem.message.startsWith("http") // making a the bigger between username and img
-                        ? normalize(10)
-                        : normalize(2),
+                      maxWidth: "90%",
+                      borderRadius: normalize(21),
+                      paddingVertical: normalize(10),
+                      paddingHorizontal: normalize(10),
                     }}
                   >
-                    {msgItem.username}
-                  </Text>
-                  {msgItem.message.startsWith("http") ? (
+                    <Text
+                      style={{
+                        color: Colors["primary-yellow"],
+                        fontFamily: "Montserrat-Medium",
+                        fontSize: normalize(14),
+                        marginBottom: normalize(10),
+                      }}
+                    >
+                      {msgItem.username}
+                    </Text>
                     <Image
                       source={{ uri: msgItem.message }}
                       style={{
@@ -273,7 +276,28 @@ const MessageList = ({ route }) => {
                         borderRadius: normalize(11),
                       }}
                     />
-                  ) : (
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      maxWidth: "80%",
+                      backgroundColor: Colors["primary-messagebg-grey"],
+
+                      borderRadius: normalize(21),
+                      paddingVertical: normalize(10),
+                      paddingHorizontal: normalize(14),
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: Colors["primary-yellow"],
+                        fontFamily: "Montserrat-Medium",
+                        fontSize: normalize(14),
+                        marginBottom: normalize(2),
+                      }}
+                    >
+                      {msgItem.username}
+                    </Text>
                     <Text
                       style={{
                         color: Colors["primary-white"],
@@ -283,8 +307,8 @@ const MessageList = ({ route }) => {
                     >
                       {msgItem.message}
                     </Text>
-                  )}
-                </View>
+                  </View>
+                )}
               </View>
             )}
           </View>
