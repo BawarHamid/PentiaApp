@@ -188,7 +188,7 @@ const MessageList = ({ route }) => {
                     paddingHorizontal: normalize(14),
                   }}
                 >
-                  {msgItem.message.startsWith("http") ? (
+                  {msgItem.message.startsWith("http") ? ( //used to identify if its a url or not, to get the image from firestore storage and also to decide what do display textmsg, or imgmsg
                     <Image
                       source={{ uri: msgItem.message }}
                       style={{
