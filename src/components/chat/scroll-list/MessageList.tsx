@@ -181,20 +181,20 @@ const MessageList = ({ route }) => {
                 {/* Chat bubble - you */}
                 <View
                   style={{
-                    maxWidth: "80%",
+                    maxWidth: "90%",
                     backgroundColor: Colors["primary-textinputbg"],
                     borderRadius: normalize(21),
                     paddingVertical: normalize(10),
-                    paddingHorizontal: normalize(14),
+                    paddingHorizontal: normalize(10),
                   }}
                 >
                   {msgItem.message.startsWith("http") ? ( //used to identify if its a url or not, to get the image from firestore storage and also to decide what do display textmsg, or imgmsg
                     <Image
                       source={{ uri: msgItem.message }}
                       style={{
-                        width: normalize(150),
-                        height: normalize(150),
-                        borderRadius: normalize(10),
+                        width: normalize(290),
+                        height: normalize(200),
+                        borderRadius: normalize(21),
                       }}
                     />
                   ) : (
@@ -245,11 +245,11 @@ const MessageList = ({ route }) => {
                 {/* Chat bubble - receiver */}
                 <View
                   style={{
-                    maxWidth: "80%",
+                    maxWidth: "90%",
                     backgroundColor: Colors["primary-messagebg-grey"],
                     borderRadius: normalize(21),
                     paddingVertical: normalize(10),
-                    paddingHorizontal: normalize(14),
+                    paddingHorizontal: normalize(10),
                   }}
                 >
                   <Text
@@ -268,9 +268,9 @@ const MessageList = ({ route }) => {
                     <Image
                       source={{ uri: msgItem.message }}
                       style={{
-                        width: normalize(231),
-                        height: normalize(180),
-                        borderRadius: normalize(10),
+                        width: normalize(290),
+                        height: normalize(200),
+                        borderRadius: normalize(11),
                       }}
                     />
                   ) : (
