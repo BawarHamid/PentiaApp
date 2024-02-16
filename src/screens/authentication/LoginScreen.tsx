@@ -84,7 +84,7 @@ const LoginScreen = () => {
           alignItems: "center",
           justifyContent: "center",
           gap: 16,
-          marginTop: normalize(150),
+          marginTop: normalize(145),
         }}
       >
         <Text

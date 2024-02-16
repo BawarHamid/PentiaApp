@@ -94,7 +94,7 @@ const RegisterScreen = () => {
           alignItems: "center",
           justifyContent: "center",
           gap: normalize(11),
-          marginTop: normalize(150),
+          marginTop: normalize(136),
         }}
       >
         <Text
