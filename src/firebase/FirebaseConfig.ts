@@ -16,7 +16,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase app
-// getting this error: No Firebase App ‘[DEFAULT]’ has been created — call Firebase App.initializeApp()
 // const firebaseApp = initializeApp(firebaseConfig);
 
 let firebaseApp;
@@ -28,11 +27,11 @@ if (firebase.apps.length === 0) {
 
 // console.log("Firebase app initialized:", firebaseApp);
 
-// const storage = getStorage(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 export const auth = initializeAuth(firebaseApp, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 
 export const database = getFirestore(firebaseApp);
-// export { storage };
+export { storage };

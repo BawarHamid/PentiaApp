@@ -2,13 +2,9 @@ import { View, Text } from "react-native";
 import React, { useEffect } from "react";
 import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
-// import { useAuth } from "../../context/UserContext";
-import { Dimensions } from "react-native";
 import { defaultStyles } from "../../utils/constants/Styles";
 import { useAuth } from "../../context/useAuth";
-// import { useAuth } from "../../context/AuthContext";
-
-const { width, height } = Dimensions.get("window");
+import normalize from "react-native-normalize";
 
 const SplashScreen = () => {
   const { user } = useAuth();
@@ -17,9 +13,9 @@ const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (user) {
-        navigation.navigate("ChatRoom" as never);
+        navigation.navigate("chat-room" as never);
       } else {
-        navigation.navigate("Login" as never);
+        navigation.navigate("social-login" as never);
       }
     }, 2600);
 
@@ -42,7 +38,7 @@ const SplashScreen = () => {
         autoPlay
         loop
         resizeMode="cover"
-        style={{ width: width * 0.4, height: height * 0.4 }}
+        style={{ width: normalize(320), height: normalize(320) }}
       />
     </View>
   );

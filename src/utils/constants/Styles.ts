@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import Colors from "./Colors";
-
 import { Dimensions } from "react-native";
+import normalize from "react-native-normalize";
 const { width, height } = Dimensions.get("window");
 
 export const defaultStyles = StyleSheet.create({
@@ -14,89 +14,50 @@ export const defaultStyles = StyleSheet.create({
     backgroundColor: Colors["primary-darkbg"],
   },
   inputField: {
-    height: 50,
-    width: width * 0.85,
+    height: normalize(55),
+    width: normalize(320),
     color: Colors["primary-black"],
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 100,
-    paddingLeft: 30,
-    fontFamily: "Montserrat-Medium",
+    borderRadius: normalize(51),
+    paddingLeft: normalize(31),
     backgroundColor: Colors["primary-white"],
+    fontFamily: "Montserrat-SemiBold",
+    fontSize: normalize(16),
   },
   authBtn: {
     backgroundColor: Colors["primary-yellow"],
-    height: 55,
-    width: width * 0.85,
-    borderRadius: 8,
+    height: normalize(55),
+    width: normalize(320),
+    borderRadius: normalize(12),
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Montserrat-SemiBold",
   },
-  socialsBtn: {
+  authOutlineBtn: {
+    height: normalize(40),
+    width: normalize(320),
+    borderRadius: normalize(12),
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: normalize(5),
+    backgroundColor: Colors["primary-yellow"],
+    borderColor: Colors["primary-border"],
+  },
+  socialsBtnRounded: {
     backgroundColor: Colors["primary-white"],
-    borderWidth: 1,
-    borderColor: Colors["primary-medium-black"],
-    height: 50,
-    width: width * 0.95,
-    borderRadius: 8,
+    height: normalize(70),
+    width: normalize(70),
+    borderRadius: normalize(51),
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     fontFamily: "Montserrat-SemiBold",
-  },
-  socialsBtnSmall: {
-    backgroundColor: Colors["primary-white"],
-    height: height * 0.05,
-    width: width * 0.15,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    fontFamily: "Montserrat-SemiBold",
-  },
-  socialsBtnText: {
-    color: "#000000",
-    fontSize: 16,
-    fontFamily: "Montserrat-SemiBold",
-    textAlign: "center",
-  },
-  socialBtnIcon: {
-    position: "absolute",
-    left: 16,
+    shadowColor: Colors["primary-white"],
   },
   socialBtnSmallIcon: {
     position: "absolute",
     alignItems: "center",
-  },
-
-  btn: {
-    backgroundColor: Colors["primary-red"],
-    height: 50,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btnText: {
-    color: Colors["primary-white"],
-    fontSize: 16,
-    fontFamily: "mon-bold",
-  },
-  btnIcon: {
-    position: "absolute",
-    left: 16,
-  },
-  footer: {
-    position: "absolute",
-    height: 100,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: Colors["primary-white"],
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    borderTopColor: Colors["primary-grey"],
-    borderTopWidth: StyleSheet.hairlineWidth,
   },
 });
 
@@ -104,12 +65,12 @@ export const stylesLogin = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors["primary-white"],
-    padding: 26,
+    padding: normalize(26),
   },
   viewSeparator: {
     flexDirection: "row",
-    gap: 10,
-    paddingHorizontal: width * 0.085,
+    gap: normalize(12),
+    paddingHorizontal: normalize(36),
     alignItems: "center",
   },
   textSeparator: {

@@ -2,7 +2,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Dimensions,
   RefreshControl,
   FlatList,
   ListRenderItem,
@@ -17,7 +16,8 @@ import { database } from "../../../firebase/FirebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { chatrooms } from "../../../types/Types";
 import LottieView from "lottie-react-native";
-const { width, height } = Dimensions.get("window");
+import normalize from "react-native-normalize";
+import { defaultStyles } from "../../../utils/constants/Styles";
 
 const ChatRoomList = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -63,9 +63,11 @@ const ChatRoomList = () => {
     return (
       <View
         style={[
+          defaultStyles.containerDarkTheme,
           {
             justifyContent: "center",
             alignItems: "center",
+            marginTop: "50%",
           },
         ]}
       >
@@ -75,18 +77,17 @@ const ChatRoomList = () => {
           loop
           resizeMode="cover"
           style={{
-            width: width * 0.2,
-            height: height * 0.2,
-            marginTop: height * 0.2,
+            width: normalize(145),
+            height: normalize(145),
           }}
         />
       </View>
     );
   }
-  // console.log("chatrooms", chatRooms);
+
   const renderChatItem: ListRenderItem<chatrooms> = ({ item }) => (
     <TouchableOpacity
-      onPress={() => (navigation as any).navigate("Chat", { item: item })}
+      onPress={() => (navigation as any).navigate("chat", { item: item })}
     >
       <Animated.View
         entering={FadeInRight}
@@ -94,13 +95,13 @@ const ChatRoomList = () => {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginBottom: height * 0.04, // gap between the chats
+          marginBottom: normalize(32),
         }}
       >
         <View
           style={{
-            marginLeft: 20,
-            gap: 4,
+            marginLeft: normalize(21),
+            gap: normalize(5),
             flex: 1,
           }}
         >
@@ -116,19 +117,19 @@ const ChatRoomList = () => {
           <Text
             style={{
               fontFamily: "Montserrat-SemiBold",
-              fontSize: 12,
+              fontSize: normalize(14),
               color: Colors["primary-medium-grey"],
             }}
           >
             {item.description}
           </Text>
         </View>
-        <View style={{ alignItems: "flex-end" }}>
+        <View style={{ alignItems: "flex-end", alignSelf: "center" }}>
           <VectorIcon
             type={"Ionicons"}
             name="chevron-forward"
             color={Colors["primary-white"]}
-            size={26}
+            size={normalize(27)}
           />
         </View>
       </Animated.View>
@@ -140,16 +141,15 @@ const ChatRoomList = () => {
       ref={listRef}
       data={chatRooms}
       renderItem={renderChatItem}
-      keyExtractor={(item, index) => index.toString()}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       contentContainerStyle={{
         backgroundColor: Colors["primary-lightbg"],
-        borderRadius: 50,
-        paddingBottom: height * 0.23,
-        paddingHorizontal: 25,
-        paddingTop: height * 0.045,
+        borderRadius: normalize(51),
+        paddingBottom: normalize(185),
+        paddingHorizontal: normalize(26),
+        paddingTop: normalize(33),
       }}
     />
   );

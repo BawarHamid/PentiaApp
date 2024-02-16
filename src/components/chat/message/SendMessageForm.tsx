@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, Alert, Keyboard } from "react-native";
+import { View, Alert, Keyboard } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "../../../context/useAuth";
 import LottieView from "lottie-react-native";
@@ -9,11 +9,11 @@ import Colors from "../../../utils/constants/Colors";
 import VectorIcon from "../../../assets/icons/VectorIcons";
 import ImagePicker from "react-native-image-crop-picker";
 import storage from "@react-native-firebase/storage";
+import normalize from "react-native-normalize";
 
-const MessageSender = ({ route }) => {
+const SendMessageForm = ({ route }) => {
   const { item } = route.params;
   const [loading, setLoading] = useState(false);
-  const { width, height } = Dimensions.get("window");
   const [message, setMessage] = useState("");
   const { user } = useAuth();
 
@@ -78,22 +78,36 @@ const MessageSender = ({ route }) => {
 
   const uploadImage = async () => {
     try {
-      ImagePicker.openPicker({
+      const image = await ImagePicker.openPicker({
         cropping: false,
-      }).then(async (image) => {
-        console.log(image);
-        let imageName = image.path.substring(image.path.lastIndexOf("/") + 1);
-        let ext = imageName.split(".").pop();
-        let name = imageName.split(".")[0];
-        let newImageName = name + Date.now() + "." + ext;
-        const storageRef = storage().ref(`chat_images/${newImageName}`);
-        await storageRef.putFile(image.path);
-        const imgUrl = await storage()
-          .ref(`chat_images/${newImageName}`)
-          .getDownloadURL();
       });
+      console.log(image);
+      let imageName = image.path.substring(image.path.lastIndexOf("/") + 1);
+      let ext = imageName.split(".").pop();
+      let name = imageName.split(".")[0];
+      let newImageName = name + Date.now() + "." + ext;
+      const storageRef = storage().ref(`chat_images/${newImageName}`);
+      await storageRef.putFile(image.path);
+      const imgUrl = await storage()
+        .ref(`chat_images/${newImageName}`)
+        .getDownloadURL();
+
+      const imgMessage = {
+        username: user?.displayName ? user.displayName : user?.email,
+        message: imgUrl,
+        timeCreated: Timestamp.fromDate(new Date()),
+        chatroomId: item.chatroomId,
+        userId: user?.uid,
+        profile_picture: user?.photoURL,
+      };
+
+      await addDoc(
+        collection(doc(database, "chatrooms", item.chatroomId), "messages"),
+        imgMessage
+      );
     } catch (error) {
-      console.error("Error picking images:", error);
+      console.log(error);
+      return;
     }
   };
 
@@ -107,8 +121,8 @@ const MessageSender = ({ route }) => {
             loop
             resizeMode="cover"
             style={{
-              width: width * 0.1,
-              height: height * 0.1,
+              width: normalize(81),
+              height: normalize(81),
               alignItems: "center",
             }}
           />
@@ -122,8 +136,8 @@ const MessageSender = ({ route }) => {
           style={{
             color: Colors["primary-white"],
             fontFamily: "Montserrat-Medium",
-            fontSize: 14,
-            width: width * 0.6,
+            fontSize: normalize(16),
+            width: normalize(226.5),
             textAlign: "left",
           }}
           iconLeft={
@@ -131,8 +145,8 @@ const MessageSender = ({ route }) => {
               type={"Ionicons"}
               name="image-outline"
               color={Colors["primary-black"]}
-              size={24}
-              // onPress={uploadImage}
+              size={normalize(25)}
+              onPress={uploadImage}
             />
           }
           placeholder="Message"
@@ -142,7 +156,7 @@ const MessageSender = ({ route }) => {
               type={"Ionicons"}
               name="send-outline"
               color={Colors["primary-iconbg-grey"]}
-              size={22}
+              size={normalize(25)}
             />
           }
         />
@@ -151,4 +165,4 @@ const MessageSender = ({ route }) => {
   );
 };
 
-export default MessageSender;
+export default SendMessageForm;

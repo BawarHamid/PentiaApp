@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
 import CustomPopUpMenu from "../../overlay/menu/CustomPopUpMenu";
+import normalize from "react-native-normalize";
 
 type ChatRoomListHeaderProps = {
   title: string;
@@ -17,14 +18,14 @@ const ChatRoomListHeader: React.FC<ChatRoomListHeaderProps> = ({
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: 25,
+        paddingHorizontal: normalize(26),
         alignItems: "center",
       }}
     >
       <Text
         style={{
           fontFamily: "Montserrat-Bold",
-          fontSize: 28,
+          fontSize: normalize(29),
           color: Colors["primary-white"],
         }}
       >

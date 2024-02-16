@@ -1,17 +1,16 @@
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   ColorValue,
   TextStyle,
   StyleProp,
   KeyboardTypeOptions,
-  Dimensions,
   GestureResponderEvent,
 } from "react-native";
 import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
+import normalize from "react-native-normalize";
 
 type MessageTextInputProps = {
   iconLeft: ReactElement;
@@ -42,27 +41,26 @@ const MessageTextInput: React.FC<MessageTextInputProps> = ({
   onPress,
   disabled,
 }) => {
-  const { width, height } = Dimensions.get("window");
   return (
-    <View style={{ paddingHorizontal: 25 }}>
+    <View style={{ paddingHorizontal: normalize(23) }}>
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          paddingHorizontal: 10,
+          paddingHorizontal: normalize(12),
           backgroundColor: Colors["primary-textinputbg"],
-          height: height * 0.06,
-          borderRadius: 50,
-          marginBottom: 16,
+          height: normalize(48),
+          borderRadius: normalize(51),
+          marginBottom: normalize(18),
         }}
       >
         <TouchableOpacity
           style={{
             backgroundColor: Colors["primary-iconbg-grey"],
-            borderRadius: 100,
-            paddingHorizontal: 4,
-            paddingVertical: 4,
+            borderRadius: normalize(51),
+            paddingHorizontal: normalize(6),
+            paddingVertical: normalize(6),
             alignItems: "center",
           }}
         >

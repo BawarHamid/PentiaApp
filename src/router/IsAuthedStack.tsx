@@ -14,7 +14,7 @@ const IsAuthedStack = () => {
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
 
       <Stack.Screen
-        name="ChatRoom"
+        name="chat-room"
         component={ChatRoomScreen}
         options={{
           // headerShown: true,
@@ -24,7 +24,7 @@ const IsAuthedStack = () => {
         }}
       />
       <Stack.Screen
-        name="Chat"
+        name="chat"
         component={ChatScreen}
         options={{
           // headerShown: true,

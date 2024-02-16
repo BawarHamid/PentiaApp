@@ -1,21 +1,23 @@
-import { View, Dimensions, Alert, Keyboard } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import Colors from "../../utils/constants/Colors";
 import ChatHeader from "../../components/generic/headers/ChatHeader";
 import VectorIcon from "../../assets/icons/VectorIcons";
-import MessageList from "../../components/chat/message/MessageList";
+import MessageList from "../../components/chat/scroll-list/MessageList";
 import LottieView from "lottie-react-native";
-import MessageSender from "../../components/chat/message/MessageSender";
+import SendMessageForm from "../../components/chat/message/SendMessageForm";
+import { defaultStyles } from "../../utils/constants/Styles";
+import normalize from "react-native-normalize";
 
 const ChatScreen = ({ route }) => {
   const [loading] = useState<boolean>(false);
-  const { width, height } = Dimensions.get("window");
   const { item } = route.params;
 
   if (loading) {
     return (
       <View
         style={[
+          defaultStyles.containerDarkTheme,
           {
             justifyContent: "center",
             alignItems: "center",
@@ -28,9 +30,8 @@ const ChatScreen = ({ route }) => {
           loop
           resizeMode="cover"
           style={{
-            width: width * 0.2,
-            height: height * 0.2,
-            marginTop: height * 0.2,
+            width: normalize(145),
+            height: normalize(145),
           }}
         />
       </View>
@@ -38,15 +39,15 @@ const ChatScreen = ({ route }) => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors["primary-darkbg"] }}>
-      <View style={{ marginTop: height * 0.035 }}>
+    <View style={[defaultStyles.containerDarkTheme]}>
+      <View style={{ marginTop: normalize(28) }}>
         <ChatHeader
           iconLeft={
             <VectorIcon
               type={"Ionicons"}
               name="chevron-back"
               color={Colors["primary-white"]}
-              size={26}
+              size={normalize(27)}
             />
           }
           title={item.chatname}
@@ -55,16 +56,21 @@ const ChatScreen = ({ route }) => {
               type={"Ionicons"}
               name="ellipsis-horizontal"
               color={Colors["primary-white"]}
-              size={26}
+              size={normalize(27)}
             />
           }
         />
       </View>
-      <View style={{ marginTop: height * 0.09, flex: 1 }}>
+      <View
+        style={{
+          marginTop: normalize(50),
+          flex: 1,
+        }}
+      >
         <MessageList route={route} />
       </View>
-      <View style={{ paddingTop: 4 }}>
-        <MessageSender route={route} />
+      <View style={{ paddingTop: normalize(15) }}>
+        <SendMessageForm route={route} />
       </View>
     </View>
   );

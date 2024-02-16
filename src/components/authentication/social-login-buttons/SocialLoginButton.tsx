@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   TouchableOpacity,
   GestureResponderEvent,
   StyleProp,

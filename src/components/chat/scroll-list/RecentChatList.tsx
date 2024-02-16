@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageSourcePropType,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "../../../utils/constants/Colors";
 import RecentViewAvatar from "../../generic/avatar/RecentViewAvatar";
@@ -20,6 +13,7 @@ import pb8 from "../../../assets/images/dummy-data/Ellipse8.png";
 import pb9 from "../../../assets/images/dummy-data/Ellipse9.png";
 import pb10 from "../../../assets/images/dummy-data/Ellipse10.png";
 import pb11 from "../../../assets/images/dummy-data/Ellipse11.png";
+import normalize from "react-native-normalize";
 
 const ChatList = [
   {
@@ -74,17 +68,20 @@ const RecentChatList = () => {
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{
-        gap: 20,
-        paddingHorizontal: 25, // for nicer corner at the end of the scroll aswell
+        gap: normalize(20),
+        paddingHorizontal: normalize(26), // for nicer corner at the end of the scroll aswell
       }}
     >
       {ChatList.map((recentChats, key) => (
-        <TouchableOpacity key={key} style={{ alignItems: "center", gap: 8 }}>
+        <TouchableOpacity
+          key={key}
+          style={{ alignItems: "center", gap: normalize(10) }}
+        >
           <RecentViewAvatar imgUrl={recentChats.img} />
           <Text
             style={{
               fontFamily: "Montserrat-SemiBold",
-              fontSize: 14,
+              fontSize: normalize(16),
               color: Colors["primary-white"],
             }}
           >

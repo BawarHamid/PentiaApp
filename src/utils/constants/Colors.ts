@@ -20,6 +20,7 @@ export default {
   "primary-darkbg": "#1B202D",
   "primary-lightbg": "#292F3F",
   "primary-textinputbg": "#373E4E",
+  "primary-border": "#3F3D56",
   "primary-cyan": "#50C2C9",
   "primary-red": "#FF385C",
   "primary-grey": "#5E5D5E",
@@ -28,7 +29,7 @@ export default {
   "primary-iconbg-grey": "#9398A7",
   "primary-blue": "#455CC6",
   "primary-medium-black": "#222222",
-  "primary-yellow": "#FFC409",
+  "primary-yellow": "#FFCB45",
   "primary-black": "#000000",
   "primary-white": "#FFFFFF",
 };

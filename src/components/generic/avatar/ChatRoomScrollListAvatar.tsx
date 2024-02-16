@@ -1,5 +1,6 @@
 import { View, Image, ImageSourcePropType } from "react-native";
 import React from "react";
+import normalize from "react-native-normalize";
 
 type ChatRoomScrollListAvatarProps = {
   imgUrl: ImageSourcePropType | undefined;
@@ -12,7 +13,11 @@ const ChatRoomScrollListAvatar: React.FC<ChatRoomScrollListAvatarProps> = ({
     <View>
       <Image
         source={imgUrl}
-        style={{ width: 51.79, height: 51.79, borderRadius: 100 }}
+        style={{
+          width: normalize(52.79),
+          height: normalize(52.79),
+          borderRadius: normalize(50),
+        }}
       />
     </View>
   );

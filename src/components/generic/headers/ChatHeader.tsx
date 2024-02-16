@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import Colors from "../../../utils/constants/Colors";
 import CustomPopUpMenu from "../../overlay/menu/CustomPopUpMenu";
 import { useNavigation } from "@react-navigation/native";
+import normalize from "react-native-normalize";
 
 type ChatHeaderProps = {
   title: string;
@@ -21,7 +22,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: 25,
+        paddingHorizontal: normalize(16),
         alignItems: "center",
         backgroundColor: Colors["primary-darkbg"],
       }}
@@ -34,7 +35,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         ellipsizeMode="tail"
         style={{
           fontFamily: "Montserrat-Bold",
-          fontSize: 19,
+          fontSize: normalize(20),
           color: Colors["primary-white"],
         }}
       >

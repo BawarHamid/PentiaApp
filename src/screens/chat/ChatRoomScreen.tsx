@@ -5,15 +5,14 @@ import VectorIcon from "../../assets/icons/VectorIcons";
 import Colors from "../../utils/constants/Colors";
 import RecentChatList from "../../components/chat/scroll-list/RecentChatList";
 import ChatRoomList from "../../components/chat/scroll-list/ChatRoomList";
+import { defaultStyles } from "../../utils/constants/Styles";
+import normalize from "react-native-normalize";
 
 const ChatRoomScreen = () => {
-  const { width, height } = Dimensions.get("window");
-
-  // console.log("userdata ChatRoom", user);
   return (
-    <View style={{ flex: 1, backgroundColor: Colors["primary-darkbg"] }}>
+    <View style={[defaultStyles.containerDarkTheme]}>
       {/* Header - view */}
-      <View style={{ marginTop: height * 0.035 }}>
+      <View style={{ marginTop: normalize(28) }}>
         <ChatRoomListHeader
           title="Messages"
           icon={
@@ -21,30 +20,30 @@ const ChatRoomScreen = () => {
               type={"Ionicons"}
               name="ellipsis-horizontal"
               color={Colors["primary-white"]}
-              size={30}
+              size={normalize(31)}
             />
           }
         />
       </View>
       {/* Recent-content view */}
-      <View style={{ marginTop: height * 0.018 }}>
+      <View style={{ marginTop: normalize(16) }}>
         <Text
           style={{
             fontFamily: "Montserrat-Medium",
-            fontSize: 12,
+            fontSize: normalize(14),
             color: Colors["primary-yellow"],
-            paddingLeft: 25,
+            paddingLeft: normalize(26),
           }}
         >
           R E C E N T
         </Text>
-        <View style={{ marginTop: height * 0.02 }}>
+        <View style={{ marginTop: normalize(18) }}>
           <RecentChatList />
         </View>
       </View>
 
       {/* List of all chat rooms - view */}
-      <View style={{ marginTop: height * 0.04 }}>
+      <View style={{ marginTop: normalize(32) }}>
         <ChatRoomList />
       </View>
     </View>

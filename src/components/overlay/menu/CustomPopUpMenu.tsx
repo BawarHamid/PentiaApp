@@ -9,6 +9,7 @@ import {
 import Colors from "../../../utils/constants/Colors";
 import VectorIcon from "../../../assets/icons/VectorIcons";
 import { useAuth } from "../../../context/useAuth";
+import normalize from "react-native-normalize";
 
 type PopUpMenuProps = {
   icon: ReactElement;
@@ -24,18 +25,18 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
         <MenuOptions
           customStyles={{
             optionsContainer: {
-              borderRadius: 10,
+              borderRadius: normalize(12),
               backgroundColor: Colors["primary-bgcolor"],
-              marginTop: 45,
-              marginLeft: -10,
+              marginTop: normalize(46),
+              marginLeft: normalize(-8),
             },
           }}
         >
           <MenuOption
             disabled={true}
             style={{
-              paddingHorizontal: 16,
-              paddingVertical: 10,
+              paddingHorizontal: normalize(17),
+              paddingVertical: normalize(12),
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
@@ -55,8 +56,8 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
 
           <MenuOption
             style={{
-              paddingHorizontal: 16,
-              paddingVertical: 10,
+              paddingHorizontal: normalize(17),
+              paddingVertical: normalize(12),
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
@@ -94,15 +95,6 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
               size={24}
             />
           </MenuOption>
-          {/* <MenuOption>
-            <View
-              style={{
-                padding: 0.5,
-                width: "100%",
-                backgroundColor: "#9CA3AF",
-              }}
-            />
-          </MenuOption> */}
         </MenuOptions>
       </Menu>
     </View>

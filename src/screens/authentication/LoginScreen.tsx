@@ -1,20 +1,18 @@
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import CornerImgWhite from "../../assets/images/CornerShapeLight.png";
+import CornerImg from "../../assets/images/CornerLight.png";
 import PentiaLight from "../../assets/images/LogoImgs/PentiaLight.png";
 import Colors from "../../utils/constants/Colors";
 import VectorIcon from "../../assets/icons/VectorIcons";
 import Animated, { BounceIn, BounceOut } from "react-native-reanimated";
 import { defaultStyles } from "../../utils/constants/Styles";
-import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CustomKeyBoardView from "../../components/keyboard-view/CustomKeyBoardView";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/FirebaseConfig";
 import AuthInput from "../../components/authentication/auth-input/AuthInput";
-import SocialLoginForm from "../../components/authentication/SocialLoginForm";
 import LottieView from "lottie-react-native";
-const { width, height } = Dimensions.get("window");
+import normalize from "react-native-normalize";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -28,67 +26,71 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    // No empty fields
-    if (!email.trim() || !password.trim()) {
-      Alert.alert("Login Error", "Please fill in all fields.");
-      return;
+    try {
+      // No empty fields
+      if (!email.trim() || !password.trim()) {
+        Alert.alert("Login Error", "Please fill in all fields.");
+        return;
+      }
+
+      // email-format is getting checked
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        Alert.alert("Login Error", "Please enter a valid email address");
+        setEmail("");
+        return;
+      }
+
+      // Loading triggered
+      setLoading(true);
+
+      // Attempt to create user
+      signInWithEmailAndPassword(auth, email.trim(), password)
+        .then(() => {
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          // Error codes er fundet på nedestående sider
+          //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
+          //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
+          let errorMessage = "Login failed. Please try again";
+          if (error.code === "auth/invalid-credential") {
+            errorMessage =
+              "Your password is incorrect or this account doesn't exist. Please try again";
+            setEmail("");
+            setPassword("");
+          } else if (error.code === "auth/wrong-password") {
+            errorMessage = "Incorrect password";
+            setPassword("");
+          } else if (error.code === "auth/invalid-email") {
+            errorMessage = "Incorrect email";
+            setEmail("");
+          }
+          Alert.alert("Registration Error", errorMessage);
+        });
+    } catch (error) {
+      Alert.alert("Login Error", String(error));
     }
-
-    // email-format is getting checked
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email.trim())) {
-      Alert.alert("Login Error", "Please enter a valid email address");
-      setEmail("");
-      return;
-    }
-
-    // Loading triggered
-    setLoading(true);
-
-    // Attempt to create user
-    signInWithEmailAndPassword(auth, email.trim(), password)
-      .then(() => {
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        // Error codes er fundet på nedestående sider
-        //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
-        //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
-        let errorMessage = "Login failed. Please try again";
-        if (error.code === "auth/invalid-credential") {
-          errorMessage =
-            "Your password is incorrect or this account doesn't exist. Please try again";
-          setEmail("");
-          setPassword("");
-        } else if (error.code === "auth/wrong-password") {
-          errorMessage = "Incorrect password";
-          setPassword("");
-        } else if (error.code === "auth/invalid-email") {
-          errorMessage = "Incorrect email";
-          setEmail("");
-        }
-        Alert.alert("Registration Error", errorMessage);
-      });
   };
 
   return (
     <CustomKeyBoardView>
       <View style={{ position: "absolute", alignItems: "center" }}>
-        <Animated.Image source={CornerImgWhite} />
+        <Animated.Image source={CornerImg} />
       </View>
       <View
         style={{
           alignItems: "center",
           justifyContent: "center",
           gap: 16,
-          marginTop: height * 0.15,
+          marginTop: normalize(150),
         }}
       >
         <Text
           style={{
             fontFamily: "Montserrat-Bold",
-            fontSize: 24,
+            fontSize: normalize(25),
             color: Colors["primary-yellow"],
           }}
         >
@@ -96,18 +98,17 @@ const LoginScreen = () => {
         </Text>
         <Animated.Image
           source={PentiaLight}
-          // style={{ width: width * 0.33, height: height * 0.17 }}
-          style={{ width: 144, height: 144 }}
+          style={{ width: normalize(142), height: normalize(142) }}
           entering={BounceIn}
           exiting={BounceOut}
         />
       </View>
 
       {/* form-view start */}
-      <View style={{ marginTop: height * 0.018 }}>
+      <View style={{ marginTop: normalize(18) }}>
         <View style={{ alignItems: "center" }}>
           {/* input for email */}
-          <View style={{ marginTop: height * 0.015 }}>
+          <View>
             <AuthInput
               changeCallback={setEmail}
               value={email}
@@ -117,12 +118,12 @@ const LoginScreen = () => {
               placeholderTextColor={Colors["primary-medium-grey"]}
               style={[
                 defaultStyles.inputField,
-                { borderColor: Colors["primary-yellow"] },
+                { borderColor: Colors["primary-border"] },
               ]}
             />
           </View>
           {/* input for password with on/off-hide */}
-          <View className="mt-4">
+          <View style={{ marginTop: normalize(18) }}>
             <AuthInput
               changeCallback={setPassword}
               value={password}
@@ -131,14 +132,14 @@ const LoginScreen = () => {
               placeholderTextColor={Colors["primary-medium-grey"]}
               style={[
                 defaultStyles.inputField,
-                { borderColor: Colors["primary-yellow"] },
+                { borderColor: Colors["primary-border"] },
               ]}
               secureTextEntry={!showPassword}
               icon={
                 <VectorIcon
                   type="Ionicons"
                   name={showPassword ? "eye" : "eye-off"}
-                  size={24}
+                  size={normalize(25)}
                   color={Colors["primary-black"]}
                   onPress={toggleShowPassword}
                   style={styles.eyeIcon}
@@ -148,12 +149,12 @@ const LoginScreen = () => {
           </View>
         </View>
         {/* forgot pass  */}
-        <View style={{ marginTop: width * 0.05, paddingRight: width * 0.1 }}>
+        <View style={{ marginTop: normalize(20), paddingRight: normalize(42) }}>
           <TouchableOpacity>
             <Text
               style={{
                 fontFamily: "Montserrat-SemiBold",
-                fontSize: 14,
+                fontSize: normalize(15),
                 color: Colors["primary-yellow"],
                 alignSelf: "flex-end",
               }}
@@ -163,7 +164,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         {/* submit btn */}
-        <View style={{ marginTop: height * 0.032, alignItems: "center" }}>
+        <View style={{ marginTop: normalize(26), alignItems: "center" }}>
           {loading ? (
             <LottieView
               source={require("../../assets/Animations/Loadings/LoadingAnimation1.json")}
@@ -171,8 +172,8 @@ const LoginScreen = () => {
               loop
               resizeMode="cover"
               style={{
-                width: width * 0.2,
-                height: height * 0.2,
+                width: normalize(120),
+                height: normalize(120),
               }}
             />
           ) : (
@@ -184,7 +185,7 @@ const LoginScreen = () => {
               <Text
                 style={{
                   color: Colors["primary-black"],
-                  fontSize: 20,
+                  fontSize: normalize(21),
                   fontFamily: "Montserrat-SemiBold",
                 }}
               >
@@ -195,9 +196,9 @@ const LoginScreen = () => {
         </View>
 
         {/* route to register */}
-        <View style={{ marginTop: width * 0.08 }}>
+        <View style={{ marginTop: normalize(18) }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Register" as never)}
+            onPress={() => navigation.navigate("register" as never)}
           >
             <View
               style={{
@@ -209,7 +210,7 @@ const LoginScreen = () => {
               <Text
                 style={{
                   fontFamily: "Montserrat-SemiBold",
-                  fontSize: 14,
+                  fontSize: normalize(15),
                   color: Colors["primary-white"],
                 }}
               >
@@ -218,7 +219,7 @@ const LoginScreen = () => {
               <Text
                 style={{
                   fontFamily: "Montserrat-SemiBold",
-                  fontSize: 14,
+                  fontSize: normalize(15),
                   color: Colors["primary-yellow"],
                 }}
               >
@@ -227,7 +228,28 @@ const LoginScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <SocialLoginForm />
+        <View
+          style={{
+            alignItems: "center",
+            marginVertical: normalize(40),
+          }}
+        >
+          <TouchableOpacity
+            style={[defaultStyles.authOutlineBtn, { height: normalize(55) }]}
+            onPress={() => navigation.navigate("social-login" as never)}
+            className="active:bg-primary-yellow active:opacity-50"
+          >
+            <Text
+              style={{
+                fontFamily: "Montserrat-SemiBold",
+                fontSize: normalize(15),
+                color: Colors["primary-black"],
+              }}
+            >
+              Login with Social Networks
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </CustomKeyBoardView>
   );
@@ -239,9 +261,8 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: "absolute",
     zIndex: 1,
-    top: height * 0.017,
-    // top: 14,
-    right: 12,
+    top: normalize(18),
+    right: normalize(14),
     alignItems: "center",
   },
 });
