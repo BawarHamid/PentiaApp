@@ -14,6 +14,7 @@ import { auth, database } from "../../firebase/FirebaseConfig";
 import AuthInput from "../../components/authentication/auth-input/AuthInput";
 import LottieView from "lottie-react-native";
 import normalize from "react-native-normalize";
+import { useAuth } from "../../context/useAuth";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -22,6 +23,7 @@ const RegisterScreen = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -53,9 +55,11 @@ const RegisterScreen = () => {
       createUserWithEmailAndPassword(auth, email.trim(), password)
         .then((userCred) => {
           const userData = {
-            username: username.trim(),
-            email: email.trim(),
-            userId: userCred.user.uid,
+            username: userCred.user.displayName
+              ? userCred.user.displayName
+              : username.trim(),
+            email: userCred.user.email ? userCred.user.email : email.trim(),
+            userId: userCred.user.uid ? userCred.user.uid : user?.uid,
           };
           return setDoc(doc(database, "users", userCred.user.uid), userData);
         })

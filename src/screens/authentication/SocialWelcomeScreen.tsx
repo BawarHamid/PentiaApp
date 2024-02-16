@@ -82,11 +82,11 @@ const SocialWelcomeScreen = () => {
           } else if (error.code === "auth/popup-closed-by-user") {
             errorMessage = "Sign-in process was canceled. Please try again.";
           }
-          Alert.alert("Google Login Error", errorMessage);
+          Alert.alert("Google Auth Error", errorMessage);
         });
     } catch (error) {
       setLoading(false);
-      console.log("Google error", error);
+      console.log("Google Auth Error", error);
       Alert.alert(String(error));
     }
   };
@@ -138,7 +138,7 @@ const SocialWelcomeScreen = () => {
           // Error codes er fundet på nedestående sider
           //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
           //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
-          let errorMessage = "Google Login failed. Please try again";
+          let errorMessage = "Facebook Auth failed. Please try again";
           if (error.code === "auth/invalid-credential") {
             errorMessage =
               "There was a problem signing in with your Google Account. Please try again.";
@@ -156,11 +156,11 @@ const SocialWelcomeScreen = () => {
           } else if (error.code === "auth/popup-closed-by-user") {
             errorMessage = "Sign-in process was canceled. Please try again.";
           }
-          Alert.alert("Google Login Error", errorMessage);
+          Alert.alert("Facebook Auth Error", errorMessage);
         });
     } catch (error) {
       setLoading(false);
-      console.log("Google error", error);
+      console.log("Facebook Auth Error", error);
       Alert.alert(String(error));
     }
   };

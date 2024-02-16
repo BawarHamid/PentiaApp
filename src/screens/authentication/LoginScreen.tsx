@@ -67,7 +67,7 @@ const LoginScreen = () => {
             errorMessage = "Incorrect email";
             setEmail("");
           }
-          Alert.alert("Registration Error", errorMessage);
+          Alert.alert("Login Error", errorMessage);
         });
     } catch (error) {
       Alert.alert("Login Error", String(error));

@@ -10,6 +10,7 @@ import VectorIcon from "../../../assets/icons/VectorIcons";
 import ImagePicker from "react-native-image-crop-picker";
 import storage from "@react-native-firebase/storage";
 import normalize from "react-native-normalize";
+import { users } from "../../../types/Types";
 
 const SendMessageForm = ({ route }) => {
   const { item } = route.params;
@@ -28,7 +29,7 @@ const SendMessageForm = ({ route }) => {
       await addDoc(
         collection(doc(database, "chatrooms", item.chatroomId), "messages"),
         {
-          username: user?.displayName ? user.displayName : user?.email, //use displayname if there is one or set the email as username.
+          username: user?.username,
           message: message, //Message text
           timeCreated: Timestamp.fromDate(new Date()), //Message date.
           chatroomId: item.chatroomId, //sets the chatroomId from the entered chatroom.
@@ -69,9 +70,10 @@ const SendMessageForm = ({ route }) => {
           console.log("ChatScreen Error:", error);
           return;
         });
-    } catch (error: any) {
-      Alert.alert("Error:", error.message);
-      console.log("ChatScreen Error:", error);
+    } catch (error) {
+      Alert.alert("Messagesender error:", String(error));
+      setLoading(false);
+      console.log(error);
       return;
     }
   };
@@ -93,7 +95,7 @@ const SendMessageForm = ({ route }) => {
         .getDownloadURL();
 
       const imgMessage = {
-        username: user?.displayName ? user.displayName : user?.email,
+        username: user?.username,
         message: imgUrl,
         timeCreated: Timestamp.fromDate(new Date()),
         chatroomId: item.chatroomId,
