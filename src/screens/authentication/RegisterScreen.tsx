@@ -54,6 +54,7 @@ const RegisterScreen = () => {
         .then((userCred) => {
           const userData = {
             username: username.trim(),
+            email: email.trim(),
             userId: userCred.user.uid,
           };
           return setDoc(doc(database, "users", userCred.user.uid), userData);
