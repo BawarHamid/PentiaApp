@@ -50,7 +50,7 @@ const CustomPopUpMenu: React.FC<PopUpMenuProps> = ({ icon }) => {
               }}
             >
               {/* show email if there's no name from social login fb/google */}
-              Hi {user?.displayName ? user.displayName : user?.email}
+              Hi {user?.displayName ? user.displayName : user?.username}
             </Text>
           </MenuOption>
 
