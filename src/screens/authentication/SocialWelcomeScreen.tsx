@@ -305,7 +305,7 @@ const SocialWelcomeScreen = () => {
               <View
                 style={{
                   alignItems: "center",
-                  marginTop: normalize(20),
+                  marginTop: normalize(15),
                   gap: normalize(14),
                 }}
               >
