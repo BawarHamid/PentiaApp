@@ -10,7 +10,6 @@ import VectorIcon from "../../../assets/icons/VectorIcons";
 import ImagePicker from "react-native-image-crop-picker";
 import storage from "@react-native-firebase/storage";
 import normalize from "react-native-normalize";
-import { users } from "../../../types/Types";
 
 const SendMessageForm = ({ route }) => {
   const { item } = route.params;
@@ -26,7 +25,7 @@ const SendMessageForm = ({ route }) => {
     // Loading triggered
     setLoading(true);
     try {
-      await addDoc(
+      addDoc(
         collection(doc(database, "chatrooms", item.chatroomId), "messages"),
         {
           username: user?.username,
@@ -94,19 +93,46 @@ const SendMessageForm = ({ route }) => {
         .ref(`chat_images/${newImageName}`)
         .getDownloadURL();
 
-      const imgMessage = {
-        username: user?.username,
-        message: imgUrl,
-        timeCreated: Timestamp.fromDate(new Date()),
-        chatroomId: item.chatroomId,
-        userId: user?.uid,
-        profile_picture: user?.photoURL,
-      };
-
-      await addDoc(
+      addDoc(
         collection(doc(database, "chatrooms", item.chatroomId), "messages"),
-        imgMessage
-      );
+        {
+          username: user?.username,
+          message: imgUrl,
+          timeCreated: Timestamp.fromDate(new Date()),
+          chatroomId: item.chatroomId,
+          userId: user?.uid,
+          profile_picture: user?.photoURL,
+        }
+      )
+        .then()
+        .catch((error) => {
+          setLoading(false);
+          // Error codes er fundet på nedestående sider
+          //https://stackoverflow.com/questions/39152004/where-can-i-find-a-list-of-all-error-codes-and-messages-for-firebase-authenticat
+          //https://firebase.google.com/docs/reference/js/auth.md#autherrorcodes
+          let errorMessage = "Failed to send message. Please try again.";
+          switch (error.code) {
+            case "permission-denied":
+              errorMessage =
+                "You don't have permission to perform this action.";
+              break;
+            case "unavailable":
+              errorMessage =
+                "The service is currently unavailable. Please try again later.";
+              break;
+            case "resource-exhausted":
+              errorMessage =
+                "You've reached a service limit. Please try again later.";
+              break;
+            case "deadline-exceeded":
+              errorMessage =
+                "The request took too long to complete. Please try again.";
+              break;
+          }
+          Alert.alert("Message Error:", errorMessage);
+          console.log("Message Error:", error);
+          return;
+        });
     } catch (error) {
       console.log(error);
       return;

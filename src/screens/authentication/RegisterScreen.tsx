@@ -219,61 +219,72 @@ const RegisterScreen = () => {
           )}
         </View>
 
-        {/* route to login */}
-        <View style={{ marginTop: normalize(16) }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("login" as never)}
-          >
+        {loading ? (
+          <View></View>
+        ) : (
+          <View>
+            {/* route to login */}
+            <View style={{ marginTop: normalize(16) }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("login" as never)}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat-SemiBold",
+                      fontSize: normalize(16),
+                      color: Colors["primary-white"],
+                    }}
+                  >
+                    Already have an account? {""}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat-SemiBold",
+                      fontSize: normalize(16),
+                      color: Colors["primary-yellow"],
+                    }}
+                  >
+                    Sign in here!
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            {/* route to social auth */}
             <View
               style={{
-                flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
+                marginVertical: normalize(30),
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Montserrat-SemiBold",
-                  fontSize: normalize(16),
-                  color: Colors["primary-white"],
-                }}
+              <TouchableOpacity
+                style={[
+                  defaultStyles.authOutlineBtn,
+                  { height: normalize(55) },
+                ]}
+                onPress={() => navigation.navigate("social-login" as never)}
+                className="active:bg-primary-yellow active:opacity-50"
               >
-                Already have an account? {""}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Montserrat-SemiBold",
-                  fontSize: normalize(16),
-                  color: Colors["primary-yellow"],
-                }}
-              >
-                Sign in here!
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "Montserrat-SemiBold",
+                    fontSize: normalize(16),
+                    color: Colors["primary-black"],
+                  }}
+                >
+                  Login with Social Networks
+                </Text>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            marginVertical: normalize(30),
-          }}
-        >
-          <TouchableOpacity
-            style={[defaultStyles.authOutlineBtn, { height: normalize(55) }]}
-            onPress={() => navigation.navigate("social-login" as never)}
-            className="active:bg-primary-yellow active:opacity-50"
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat-SemiBold",
-                fontSize: normalize(16),
-                color: Colors["primary-black"],
-              }}
-            >
-              Login with Social Networks
-            </Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+        )}
       </View>
     </CustomKeyBoardView>
   );

@@ -174,7 +174,7 @@ const MessageList = ({ route }) => {
                 style={{
                   flexDirection: "row",
                   justifyContent: "flex-end",
-                  marginRight: normalize(11),
+                  marginRight: normalize(12),
                   marginBottom: normalize(16),
                 }}
               >
@@ -183,7 +183,7 @@ const MessageList = ({ route }) => {
                   <View
                     style={{
                       maxWidth: "90%",
-                      borderRadius: normalize(21),
+                      borderRadius: normalize(20),
                       paddingVertical: normalize(10),
                       paddingHorizontal: normalize(10),
                     }}
@@ -193,7 +193,7 @@ const MessageList = ({ route }) => {
                       style={{
                         width: normalize(290),
                         height: normalize(200),
-                        borderRadius: normalize(21),
+                        borderRadius: normalize(20),
                       }}
                     />
                   </View>
@@ -202,7 +202,7 @@ const MessageList = ({ route }) => {
                     style={{
                       maxWidth: "80%",
                       backgroundColor: Colors["primary-textinputbg"],
-                      borderRadius: normalize(21),
+                      borderRadius: normalize(20),
                       paddingVertical: normalize(10),
                       paddingHorizontal: normalize(14),
                     }}
@@ -220,6 +220,7 @@ const MessageList = ({ route }) => {
                 )}
               </View>
             ) : (
+              // This is what the reciver see
               <View
                 style={{
                   flexDirection: "row",
@@ -234,7 +235,7 @@ const MessageList = ({ route }) => {
                       marginRight: normalize(10),
                       width: normalize(34),
                       height: normalize(34),
-                      borderRadius: normalize(51),
+                      borderRadius: normalize(50),
                     }}
                     source={{ uri: msgItem.profile_picture }}
                   />
@@ -244,7 +245,7 @@ const MessageList = ({ route }) => {
                       marginRight: normalize(10),
                       width: normalize(34),
                       height: normalize(34),
-                      borderRadius: normalize(51),
+                      borderRadius: normalize(50),
                     }}
                     source={PentiaLight}
                   />
@@ -253,7 +254,7 @@ const MessageList = ({ route }) => {
                   <View
                     style={{
                       maxWidth: "90%",
-                      borderRadius: normalize(21),
+                      borderRadius: normalize(20),
                       paddingVertical: normalize(10),
                       paddingHorizontal: normalize(10),
                     }}
@@ -283,7 +284,7 @@ const MessageList = ({ route }) => {
                       maxWidth: "80%",
                       backgroundColor: Colors["primary-messagebg-grey"],
 
-                      borderRadius: normalize(21),
+                      borderRadius: normalize(20),
                       paddingVertical: normalize(10),
                       paddingHorizontal: normalize(14),
                     }}
